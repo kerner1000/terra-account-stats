@@ -1,0 +1,14 @@
+{
+  "swap": {
+    "belief_price": "97.35108982598038",
+    "max_spread": "0.01",
+    "offer_asset": {
+      "amount": "30000000000",
+      "info": {
+        "native_token": {
+          "denom": "uusd"
+        }
+      }
+    }
+  }
+}

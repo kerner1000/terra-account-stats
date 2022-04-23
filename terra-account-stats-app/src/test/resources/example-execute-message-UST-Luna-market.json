@@ -1,0 +1,10 @@
+{
+  "assert_limit_order": {
+    "ask_denom": "uluna",
+    "offer_coin": {
+      "denom": "uusd",
+      "amount": "10000000"
+    },
+    "minimum_receive": "104652"
+  }
+}

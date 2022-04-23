@@ -6,3 +6,16 @@ server:
   port: 8090
 
 apikey: "your api key here"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+server.port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.github.kerner1000: INFO

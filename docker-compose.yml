@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  terra-account-stats-app:
+    build: terra-account-stats-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker

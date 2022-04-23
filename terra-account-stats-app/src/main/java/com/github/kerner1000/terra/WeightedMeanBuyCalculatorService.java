@@ -16,7 +16,7 @@ public class WeightedMeanBuyCalculatorService {
     private final Map<Double, Double> meanMap = new LinkedHashMap<>();
 
     public void visit(List<Transaction> transactions) {
-        Map<Double, Double> wm = Utils.getTerraSwapBuyAverageMap(transactions);
+        Map<Double, Double> wm = Utils.getSwapAverageMap(transactions);
         meanMap.putAll(wm);
         if(wm.size() > 1) {
             log.debug("Weighted mean map:\n{}\n======\nweighted mean: {}", meanMap.entrySet().stream().map(Object::toString).collect(Collectors.joining("\n")), Utils.getWeightedMean(meanMap));

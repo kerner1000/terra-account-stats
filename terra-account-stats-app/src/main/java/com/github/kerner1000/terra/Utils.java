@@ -8,12 +8,13 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class Utils {
 
-    static final Predicate<Swap> UST_BUY_FILTER = s -> s != null && "uusd".equals(s.getOfferAsset().getInfo().getNativeToken().getDenom());
+    static final Predicate<Swap> BUY_WITH_UST = s -> s != null && "uusd".equals(s.getOfferAsset().getInfo().getNativeToken().getDenom());
+
+    static final Predicate<Swap> BUY_WITH_LUNA = s -> s != null && "uluna".equals(s.getOfferAsset().getInfo().getNativeToken().getDenom());
 
     static final Predicate<Additional> TERRASWAP_FILTER = a -> a != null && a.getContract() != null && a.getContract().stream().anyMatch(c -> c.contains(SwapPairs.TerraSwap.LUNA_UST));
 
@@ -41,7 +42,7 @@ public class Utils {
         );
     }
 
-    static Map<Double, Double> getTerraSwapBuyAverageMap(Collection<? extends Transaction> transactionsList) {
+    static Map<Double, Double> getSwapAverageMap(Collection<? extends Transaction> transactionsList) {
         Map<Double, Double> map = new TreeMap<>(Collections.reverseOrder());
         for (Transaction t : transactionsList) {
             for (Event e : t.getEvents()) {
@@ -50,7 +51,7 @@ public class Utils {
                     if (TERRASWAP_FILTER.test(additional)) {
                         for (ExecuteMessage executeMessage : s.getAdditional().getExecuteMessages()) {
                             Swap swap = executeMessage.getSwap();
-                            if (UST_BUY_FILTER.test(swap)) {
+                            if (BUY_WITH_UST.test(swap)) {
                                 double price = swap.getBeliefPrice().doubleValue();
                                 double nativeAmount = swap.getOfferAsset().getAmount().doubleValue();
                                 double simpleAmount = Constants.simpleAmount(nativeAmount);
@@ -87,7 +88,7 @@ public class Utils {
     }
 
     static double getWeightedMean(Collection<? extends Transaction> transactionsList) {
-        return getWeightedMean(getTerraSwapBuyAverageMap(transactionsList));
+        return getWeightedMean(getSwapAverageMap(transactionsList));
     }
     static double getWeightedMean(Map<Double, Double> map) {
         return map.entrySet().stream().collect(averagingWeighted(Map.Entry::getKey, Map.Entry::getValue));

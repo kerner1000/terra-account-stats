@@ -1,4 +1,4 @@
-package com.github.kerner1000.terra.data;
+package com.github.kerner1000.terra.json.data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -16,7 +16,7 @@ public class ExecuteMessageTest {
     void testTerraswap() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        ExecuteMessage messages = objectMapper.readValue(new File("src/test/resources/example-execute-message-terraswap.json"), new TypeReference<>() {
+        ExecuteMessage messages = objectMapper.readValue(new File("src/test/resources/example-execute-message-Luna-UST-terraswap.json"), new TypeReference<>() {
         });
         assertNotNull(messages);
         assertNotNull(messages.getSwap());
@@ -26,7 +26,7 @@ public class ExecuteMessageTest {
     void testMarket() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        ExecuteMessage messages = objectMapper.readValue(new File("src/test/resources/example-execute-message-market.json"), new TypeReference<>() {
+        ExecuteMessage messages = objectMapper.readValue(new File("src/test/resources/example-execute-message-UST-Luna-market.json"), new TypeReference<>() {
         });
         assertNotNull(messages);
         AssertLimitOrder assertLimitOrder = messages.getAssertLimitOrder();

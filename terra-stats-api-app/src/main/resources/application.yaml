@@ -3,9 +3,7 @@ logging:
     com.github.kerner1000: debug
 
 server:
-  port: 8090
-
-apikey: "your api key here"
+  port: 8080
 
 ---
 spring:

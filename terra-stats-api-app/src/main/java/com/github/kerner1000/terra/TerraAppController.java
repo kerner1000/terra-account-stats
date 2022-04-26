@@ -36,7 +36,7 @@ public class TerraAppController {
         List<Transaction> result = new ArrayList<>();
         log.info("Starting to query transactions for Terra {}", terraAddress);
         for(int i = startOffset; i <= stopOffset; i += stepOffset){
-            List<Transaction> transactions = iterate(terraAddress, limit, i);
+            List<Transaction> transactions = paginate(terraAddress, limit, i);
             if(transactions == null) {
                 // no more transactions
                 break;
@@ -51,7 +51,7 @@ public class TerraAppController {
         return result2;
     }
 
-    List<Transaction> iterate(String terraAddress, int txLimit, int txOffset) {
+    List<Transaction> paginate(String terraAddress, int txLimit, int txOffset) {
 
         DataHubRequestBody body = new DataHubRequestBody();
         body.setAccount(Collections.singletonList(terraAddress));

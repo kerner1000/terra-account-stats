@@ -1,7 +1,7 @@
 version: '3.9'
 services:
-  terra-account-stats-app:
-    build: terra-account-stats-app
+  terra-stats-api:
+    build: terra-stats-api
     ports:
       - "8080:8080"
     environment:

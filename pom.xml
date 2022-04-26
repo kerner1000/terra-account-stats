@@ -11,8 +11,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>kerner1000.terra-account-stats</groupId>
-    <artifactId>terra-account-stats-parent</artifactId>
+    <groupId>kerner1000.terra</groupId>
+    <artifactId>terra-stats-api-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
@@ -24,7 +24,7 @@
     </properties>
 
     <modules>
-        <module>terra-account-stats-app</module>
+        <module>terra-stats-api-app</module>
     </modules>
 
     <dependencyManagement>

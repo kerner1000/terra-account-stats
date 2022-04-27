@@ -8,15 +8,15 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class WeightedMeanBuyCalculatorService {
+public class WeightedMeanCalculatorService {
 
     private final WeightedMeanSwapMaps result = new WeightedMeanSwapMaps();
 
     public void visit(List<Transaction> transactions) {
-        WeightedMeanSwapMaps wm = TransactionsVisitor.getSwapAverageMap(transactions);
+        WeightedMeanSwapMaps wm = Transactions.getWeightedMeanSwapMaps(transactions);
         result.add(wm);
         if(wm.getBuyMap().size() > 1 || wm.getSellMap().size() > 1) {
-            log.debug("Weighted mean map:\n{}\n======\nweighted mean: {}", result, TransactionsVisitor.getWeightedMean(result));
+            log.debug("Weighted mean map:\n{}\n======\nweighted mean: {}", result, Transactions.getWeightedMean(result));
         }
         return;
     }

@@ -19,15 +19,15 @@ public class TerraAppController {
 
     private final DataHubClient dataHubClient;
 
-    private final WeightedMeanBuyCalculatorService callbackService;
+    private final WeightedMeanCalculatorService callbackService;
 
-    public TerraAppController(DataHubClient dataHubClient, WeightedMeanBuyCalculatorService callbackService) {
+    public TerraAppController(DataHubClient dataHubClient, WeightedMeanCalculatorService callbackService) {
         this.dataHubClient = dataHubClient;
         this.callbackService = callbackService;
     }
 
     @GetMapping(value = "/averageBuyLuna/{terraAddress}", produces = "application/json")
-    WeightedMeanSwapResult averageBuyLuna(@PathVariable(required = true) String terraAddress) {
+    WeightedMeanSwapPrices averageBuyLuna(@PathVariable(required = true) String terraAddress) {
         log.info("Collecting all transactions");
         int limit = 100;
         int startOffset = 0;
@@ -45,7 +45,7 @@ public class TerraAppController {
             result.addAll(transactions);
             log.info("Collected {} transactions", result.size());
         }
-        WeightedMeanSwapResult result2 = TransactionsVisitor.getWeightedMean(callbackService.getMeanMap());
+        WeightedMeanSwapPrices result2 = Transactions.getWeightedMean(callbackService.getMeanMap());
         log.info("Collected {} transactions, average swap price is {}", result.size(), result2);
 
         return result2;

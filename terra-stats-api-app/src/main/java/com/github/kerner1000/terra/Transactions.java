@@ -11,11 +11,8 @@ import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 import java.util.stream.Collector;
 
-import static com.github.kerner1000.terra.Coin.LUNA;
-import static com.github.kerner1000.terra.Coin.UST;
-
 @Slf4j
-public class TransactionsVisitor {
+public class Transactions {
 
     static <T> Collector<T, ?, Double> averagingWeighted(ToDoubleFunction<T> valueFunction, ToDoubleFunction<T> weightFunction) {
         class Box {
@@ -47,54 +44,7 @@ public class TransactionsVisitor {
 
     static final Predicate<Additional> ASTROPORT_FILTER = a -> a != null && a.getContract() != null && a.getContract().stream().anyMatch(c -> c.contains(SwapPairs.Astroport.LUNA_UST));
 
-    static class TerraSwapAstroportSwapHandler {
-
-        static ExtractedSwap handle(ExecuteMessage executeMessage, Map<Double, Double> buyMap, Map<Double, Double> sellMap){
-            Swap swap = executeMessage.getSwap();
-            double price = swap.getBeliefPrice().doubleValue();
-            double simpleAmount = Constants.simpleAmount(swap.getOfferAsset().getAmount().doubleValue());
-            SwapType swapType;
-            if (BUY_WITH_UST.test(swap)) {
-                buyMap.put(price, simpleAmount);
-                swapType = new SwapType(UST, LUNA);
-            } else if(BUY_WITH_LUNA.test(swap)){
-                price = 1/price;
-                swapType = new SwapType(LUNA, UST);
-                sellMap.put(price, simpleAmount);
-            } else
-                throw new IllegalStateException();
-
-            var result = new ExtractedSwap(swapType, price, simpleAmount);
-            return result;
-        }
-    }
-
-    static class MarketSwapHandler {
-        static ExtractedSwap handle(ExecuteMessage executeMessage, Map<Double, Double> buyMap, Map<Double, Double> sellMap){
-            AssertLimitOrder assertLimitOrder = executeMessage.getAssertLimitOrder();
-            double receiveAmount = assertLimitOrder.getMinimumReceive().doubleValue();
-            double nativeAmount = assertLimitOrder.getOfferCoin().getAmount().doubleValue();
-            double simpleAmount = Constants.simpleAmount(nativeAmount);
-            double price;
-            SwapType swapType;
-            if("uluna".equals(assertLimitOrder.getAskDenom())){
-                price = nativeAmount / receiveAmount;
-                buyMap.put(price, simpleAmount);
-                swapType = new SwapType(UST, LUNA);
-            } else if ("uusd".equals(assertLimitOrder.getAskDenom())){
-                price = receiveAmount / nativeAmount;
-                sellMap.put(price, simpleAmount);
-                swapType = new SwapType(LUNA, UST);
-            }
-            else
-                throw new IllegalStateException();
-
-            var result = new ExtractedSwap(swapType, price, simpleAmount);
-            return result;
-        }
-    }
-
-    static WeightedMeanSwapMaps getSwapAverageMap(Collection<? extends Transaction> transactionsList) {
+    static WeightedMeanSwapMaps getWeightedMeanSwapMaps(Collection<? extends Transaction> transactionsList) {
             // offer coin is UST
             Map<Double, Double> buyMap = new TreeMap<>(Collections.reverseOrder());
             // receive coin is UST
@@ -138,13 +88,13 @@ public class TransactionsVisitor {
             return new WeightedMeanSwapMaps(buyMap, sellMap);
         }
 
-        static WeightedMeanSwapResult getWeightedMean(Collection<? extends Transaction> transactionsList) {
-            WeightedMeanSwapMaps result = getSwapAverageMap(transactionsList);
+        static WeightedMeanSwapPrices getWeightedMean(Collection<? extends Transaction> transactionsList) {
+            WeightedMeanSwapMaps result = getWeightedMeanSwapMaps(transactionsList);
             return getWeightedMean(result);
         }
 
-        static WeightedMeanSwapResult getWeightedMean(WeightedMeanSwapMaps swapResult) {
-            return new WeightedMeanSwapResult(swapResult.getBuyMap().entrySet().stream().collect(averagingWeighted(Map.Entry::getKey, Map.Entry::getValue)), swapResult.getSellMap().entrySet().stream().collect(averagingWeighted(Map.Entry::getKey, Map.Entry::getValue)));
+        static WeightedMeanSwapPrices getWeightedMean(WeightedMeanSwapMaps swapResult) {
+            return new WeightedMeanSwapPrices(swapResult.getBuyMap().entrySet().stream().collect(averagingWeighted(Map.Entry::getKey, Map.Entry::getValue)), swapResult.getSellMap().entrySet().stream().collect(averagingWeighted(Map.Entry::getKey, Map.Entry::getValue)));
         }
 
 }

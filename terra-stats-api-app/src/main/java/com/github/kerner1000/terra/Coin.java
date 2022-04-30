@@ -1,5 +1,5 @@
 package com.github.kerner1000.terra;
 
-enum Coin {
+public enum Coin {
     UST, LUNA
 }

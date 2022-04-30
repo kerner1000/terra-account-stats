@@ -1,15 +1,16 @@
-package com.github.kerner1000.terra;
+package com.github.kerner1000.terra.transactions.swap;
 
+import com.github.kerner1000.terra.*;
 import com.github.kerner1000.terra.json.data.AssertLimitOrder;
 import com.github.kerner1000.terra.json.data.ExecuteMessage;
-
-import java.util.Map;
 
 import static com.github.kerner1000.terra.Coin.LUNA;
 import static com.github.kerner1000.terra.Coin.UST;
 
-class MarketSwapHandler {
-    static ExtractedSwap handle(ExecuteMessage executeMessage, Map<Double, Double> buyMap, Map<Double, Double> sellMap) {
+public class MarketSwapExtractor implements SwapExtractor {
+
+    public ExtractedSwap extract(ExecuteMessage executeMessage) {
+        WeightedMeanSwapMaps weightedMeanSwapMaps = new WeightedMeanSwapMaps();
         AssertLimitOrder assertLimitOrder = executeMessage.getAssertLimitOrder();
         double receiveAmount = assertLimitOrder.getMinimumReceive().doubleValue();
         double nativeAmount = assertLimitOrder.getOfferCoin().getAmount().doubleValue();
@@ -18,16 +19,16 @@ class MarketSwapHandler {
         SwapType swapType;
         if ("uluna".equals(assertLimitOrder.getAskDenom())) {
             price = nativeAmount / receiveAmount;
-            buyMap.put(price, simpleAmount);
+            weightedMeanSwapMaps.getBuyMap().put((int) Math.round(price), (int) Math.round(simpleAmount));
             swapType = new SwapType(UST, LUNA);
         } else if ("uusd".equals(assertLimitOrder.getAskDenom())) {
             price = receiveAmount / nativeAmount;
-            sellMap.put(price, simpleAmount);
+            weightedMeanSwapMaps.getSellMap().put((int) Math.round(price), (int) Math.round(simpleAmount));
             swapType = new SwapType(LUNA, UST);
         } else
             throw new IllegalStateException();
 
-        var result = new ExtractedSwap(swapType, price, simpleAmount);
+        var result = new ExtractedSwap(swapType, weightedMeanSwapMaps);
         return result;
     }
 }

@@ -3,9 +3,7 @@ package com.github.kerner1000.terra.json.data;
 import lombok.Data;
 
 @Data
-public class Transaction {
+public class Msg {
 
-    String txhash;
-
-    Tx tx;
+    MsgValue value;
 }

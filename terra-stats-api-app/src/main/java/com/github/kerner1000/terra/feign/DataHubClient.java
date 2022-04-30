@@ -1,6 +1,7 @@
 package com.github.kerner1000.terra.feign;
 
 import com.github.kerner1000.terra.json.data.DataHubRequestBody;
+import com.github.kerner1000.terra.json.data.DatahubTransactionWrapper;
 import com.github.kerner1000.terra.json.data.Transaction;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,5 +14,5 @@ import java.util.List;
 public interface DataHubClient {
 
     @RequestMapping(method = RequestMethod.POST, value = "/${api-key}/transactions_search", produces = "application/json")
-    List<Transaction> getFuu(@RequestBody DataHubRequestBody requestBody);
+    List<DatahubTransactionWrapper> getFuu(@RequestBody DataHubRequestBody requestBody);
 }

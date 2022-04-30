@@ -9,6 +9,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -21,10 +22,8 @@ public class Additional {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    private List<ExecuteMessage> result = new ArrayList<>();
-
-    private List<ExecuteMessage> extract(List<String> executeMessageStrings) {
-
+    public static List<ExecuteMessage> extract(List<String> executeMessageStrings) {
+        List<ExecuteMessage> result = new ArrayList<>();
         for (String messageString : executeMessageStrings) {
             try {
                 ExecuteMessage messageObject = objectMapper.readValue(messageString, new TypeReference<ExecuteMessage>() {
@@ -35,6 +34,10 @@ public class Additional {
             }
         }
         return result;
+    }
+
+    public static List<ExecuteMessage> extract(String executeMessageString) {
+        return extract(Collections.singletonList(executeMessageString));
     }
 
     List<String> contract;

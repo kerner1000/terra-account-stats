@@ -1,18 +1,6 @@
 package com.github.kerner1000.terra;
 
-import lombok.Data;
-
-import java.util.Objects;
-
-@Data
-final class SwapType {
-    private final Coin give;
-    private final Coin get;
-
-    SwapType(Coin give, Coin get) {
-        this.give = give;
-        this.get = get;
-    }
+public record SwapType(Coin give, Coin get) {
 
     @Override
     public String toString() {

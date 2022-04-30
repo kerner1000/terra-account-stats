@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 public class WeightedMeanSwapMaps {
 
     // offer coin is UST
-    private final Map<Double, Double> buyMap;
+    private final Map<Integer, Integer> buyMap;
     // receive coin is UST
-    private final Map<Double, Double> sellMap;
-    public WeightedMeanSwapMaps(Map<Double, Double> buyMap, Map<Double, Double> sellMap) {
+    private final Map<Integer, Integer> sellMap;
+    public WeightedMeanSwapMaps(Map<Integer, Integer> buyMap, Map<Integer, Integer> sellMap) {
         this.buyMap = buyMap;
         this.sellMap = sellMap;
     }
@@ -32,9 +32,15 @@ public class WeightedMeanSwapMaps {
 
     @Override
     public String toString() {
-        return "WeightedMeanSwapMaps:\n" +
-                "buyMap:\n" + buyMap.entrySet().stream().map(Object::toString).collect(Collectors.joining("\n")) +
-                "\nsellMap:\n" + sellMap.entrySet().stream().map(Object::toString).collect(Collectors.joining("\n"))
+        return
+                "buy: price, amount:\n" + buyMap.entrySet().stream().map(this::map).collect(Collectors.joining("\n")) +
+                "\nsell: price,amount:\n" + sellMap.entrySet().stream().map(this::map).collect(Collectors.joining("\n"))
                 ;
+    }
+
+    private String map(Map.Entry<Integer, Integer> doubleDoubleEntry) {
+        String price = String.format("%,10d",doubleDoubleEntry.getKey());
+        String amount = String.format("%,7d",doubleDoubleEntry.getValue());
+        return price + ": " + amount;
     }
 }

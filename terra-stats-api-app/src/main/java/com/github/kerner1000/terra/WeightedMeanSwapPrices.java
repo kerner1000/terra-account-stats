@@ -14,9 +14,9 @@ public final class WeightedMeanSwapPrices {
 
     @Override
     public String toString() {
-        return '[' +
+        return
                 "buy=" + String.format("%.2f", buy) + ", " +
-                "sell=" + String.format("%.2f", sell) + ']';
+                "sell=" + String.format("%.2f", sell) ;
     }
 
 

@@ -5,6 +5,14 @@ logging:
 server:
   port: 8080
 
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: NONE
+
+app.terra.sleep-between-calls: 800
+
 ---
 spring:
   config:
@@ -17,3 +25,4 @@ logging:
   level:
     root: INFO
     com.github.kerner1000: INFO
+

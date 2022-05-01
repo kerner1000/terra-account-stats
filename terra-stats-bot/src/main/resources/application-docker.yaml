@@ -1,0 +1,6 @@
+server.port: 8080
+
+logging:
+  level:
+    root: info
+    com.github.kerner1000: debug

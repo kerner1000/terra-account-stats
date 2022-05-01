@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: Terra Stats OpenAPI contract
+  description: Terra Stats OpenAPI contract
+  version: 1.0.0
+paths:
+  /average-buy-sell/{token}/{terra-address}:
+    get:
+      summary: get the average prices for given token
+      description: get the average prices for given token
+      operationId: getAverageBuySell
+      parameters:
+        - name: token
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: terra-address
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AverageBuySell'
+        500:
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    AverageBuySell:
+      type: object
+    Error:
+      type: object

@@ -1,0 +1,17 @@
+logging:
+  level:
+    com.github.kerner1000: debug
+
+server:
+  port: 9090
+
+feign:
+  client:
+    config:
+      account-stats-api:
+        connectTimeout: 1200000
+        readTimeout: 1200000
+        loggerLevel: full
+
+management.endpoint.health.show-details: "ALWAYS"
+management.endpoints.web.exposure.include: "*"

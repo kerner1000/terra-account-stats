@@ -44,9 +44,9 @@ public class Transactions {
 
     private final List<AbstractTransactionVisitor> visitors = Arrays.asList(new TerraswapTransactionVisitor(), new AstroportTransactionVisitor(), new MarketTransactionVisitor());
 
-    public WeightedMeanSwapMaps getWeightedMeanSwapMaps(Collection<? extends Transaction> transactionsList) throws InterruptedException {
+    public BuySellMaps getWeightedMeanSwapMaps(Collection<? extends Transaction> transactionsList) throws InterruptedException {
 
-        WeightedMeanSwapMaps result = new WeightedMeanSwapMaps();
+        BuySellMaps result = new BuySellMaps();
 
         for (Transaction transaction : transactionsList) {
             if(Thread.currentThread().isInterrupted()){
@@ -59,13 +59,13 @@ public class Transactions {
         return result;
     }
 
-    public WeightedMeanSwapPrices getWeightedMean(Collection<? extends Transaction> transactionsList) throws InterruptedException {
-        WeightedMeanSwapMaps result = getWeightedMeanSwapMaps(transactionsList);
+    public SwapPrices getWeightedMean(Collection<? extends Transaction> transactionsList) throws InterruptedException {
+        BuySellMaps result = getWeightedMeanSwapMaps(transactionsList);
         return getWeightedMean(result);
     }
 
-    public static WeightedMeanSwapPrices getWeightedMean(WeightedMeanSwapMaps swapResult) {
-        return new WeightedMeanSwapPrices(swapResult.getBuyMap().entrySet().stream().collect(averagingWeighted(Map.Entry::getKey, Map.Entry::getValue)), swapResult.getSellMap().entrySet().stream().collect(averagingWeighted(Map.Entry::getKey, Map.Entry::getValue)));
+    public static SwapPrices getWeightedMean(BuySellMaps swapResult) {
+        return new SwapPrices(swapResult.getBuyMap().entrySet().stream().collect(averagingWeighted(Map.Entry::getKey, Map.Entry::getValue)), swapResult.getSellMap().entrySet().stream().collect(averagingWeighted(Map.Entry::getKey, Map.Entry::getValue)));
     }
 
 }

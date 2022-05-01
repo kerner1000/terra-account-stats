@@ -61,7 +61,7 @@ public class TerraAppController {
             offset = lcdTransactionsPagination.getNext();
             Thread.sleep(terraConfig.getSleepBetweenCalls());
         } while (offset != 0);
-        WeightedMeanSwapPrices result2 = Transactions.getWeightedMean(callbackService.getMeanMap());
+        SwapPrices result2 = Transactions.getWeightedMean(callbackService.getMeanMap());
         log.info("Collected {} transactions, average swap price is {}", result.size(), result2);
         Stats stats = new Stats(callbackService.getMeanMap());
         return stats.toString();

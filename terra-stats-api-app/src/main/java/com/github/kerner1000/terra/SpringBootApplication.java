@@ -7,10 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 public class SpringBootApplication {
 
-
     public static void main(String[] args) {
         SpringApplication.run(SpringBootApplication.class, args);
     }
-
-
 }

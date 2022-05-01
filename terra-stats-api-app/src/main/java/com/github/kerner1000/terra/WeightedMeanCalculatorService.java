@@ -13,10 +13,10 @@ import java.util.List;
 @Service
 public class WeightedMeanCalculatorService {
 
-    private final WeightedMeanSwapMaps result = new WeightedMeanSwapMaps();
+    private final BuySellMaps result = new BuySellMaps();
 
     public void visit(List<Transaction> transactions) throws InterruptedException {
-        WeightedMeanSwapMaps wm = new Transactions().getWeightedMeanSwapMaps(transactions);
+        BuySellMaps wm = new Transactions().getWeightedMeanSwapMaps(transactions);
         result.add(wm);
         if(wm.getBuyMap().size() > 1 || wm.getSellMap().size() > 1) {
             log.debug("Weighted mean map:\n{}\n======\nweighted mean: {}", result, Transactions.getWeightedMean(result));
@@ -24,7 +24,7 @@ public class WeightedMeanCalculatorService {
         return;
     }
 
-    public WeightedMeanSwapMaps getMeanMap() {
+    public BuySellMaps getMeanMap() {
         return result;
     }
 }

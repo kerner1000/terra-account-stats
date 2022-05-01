@@ -10,7 +10,7 @@ import static com.github.kerner1000.terra.Coin.UST;
 public class MarketSwapExtractor implements SwapExtractor {
 
     public ExtractedSwap extract(ExecuteMessage executeMessage) {
-        WeightedMeanSwapMaps weightedMeanSwapMaps = new WeightedMeanSwapMaps();
+        BuySellMaps buySellMaps = new BuySellMaps();
         AssertLimitOrder assertLimitOrder = executeMessage.getAssertLimitOrder();
         double receiveAmount = assertLimitOrder.getMinimumReceive().doubleValue();
         double nativeAmount = assertLimitOrder.getOfferCoin().getAmount().doubleValue();
@@ -19,16 +19,16 @@ public class MarketSwapExtractor implements SwapExtractor {
         SwapType swapType;
         if ("uluna".equals(assertLimitOrder.getAskDenom())) {
             price = nativeAmount / receiveAmount;
-            weightedMeanSwapMaps.getBuyMap().put((int) Math.round(price), (int) Math.round(simpleAmount));
+            buySellMaps.addBuy(price, simpleAmount);
             swapType = new SwapType(UST, LUNA);
         } else if ("uusd".equals(assertLimitOrder.getAskDenom())) {
             price = receiveAmount / nativeAmount;
-            weightedMeanSwapMaps.getSellMap().put((int) Math.round(price), (int) Math.round(simpleAmount));
+            buySellMaps.addSell(price, simpleAmount);
             swapType = new SwapType(LUNA, UST);
         } else
             throw new IllegalStateException();
 
-        var result = new ExtractedSwap(swapType, weightedMeanSwapMaps);
+        var result = new ExtractedSwap(swapType, buySellMaps);
         return result;
     }
 }

@@ -1,16 +1,16 @@
 package com.github.kerner1000.terra.transactions.swap;
 
 import com.github.kerner1000.terra.ExtractedSwap;
-import com.github.kerner1000.terra.WeightedMeanSwapMaps;
+import com.github.kerner1000.terra.BuySellMaps;
 import com.github.kerner1000.terra.json.data.*;
 import com.github.kerner1000.terra.transactions.AbstractTransactionVisitor;
 
 public abstract class SwapTransactionVisitor extends AbstractTransactionVisitor {
 
-    private final WeightedMeanSwapMaps result = new WeightedMeanSwapMaps();
+    private final BuySellMaps result = new BuySellMaps();
 
     @Override
-    public WeightedMeanSwapMaps visit(Transaction transaction) {
+    public BuySellMaps visit(Transaction transaction) {
         if (transaction != null) {
             Tx tx = transaction.getTx();
             if (tx != null) {

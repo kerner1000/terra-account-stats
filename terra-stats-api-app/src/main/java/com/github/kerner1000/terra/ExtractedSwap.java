@@ -1,6 +1,6 @@
 package com.github.kerner1000.terra;
 
-public record ExtractedSwap(SwapType swapType, WeightedMeanSwapMaps swapMaps) {
+public record ExtractedSwap(SwapType swapType, BuySellMaps swapMaps) {
 
     @Override
     public String toString() {

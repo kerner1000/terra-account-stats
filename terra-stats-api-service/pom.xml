@@ -10,7 +10,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>terra-stats-api-app</artifactId>
+    <artifactId>terra-stats-api-service</artifactId>
 
     <dependencies>
         <dependency>

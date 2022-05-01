@@ -24,7 +24,7 @@
     </properties>
 
     <modules>
-        <module>terra-stats-api-app</module>
+        <module>terra-stats-api-service</module>
         <module>terra-stats-contract</module>
         <module>terra-stats-bot</module>
     </modules>

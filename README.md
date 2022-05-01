@@ -1,2 +1,2 @@
 # terra-account-stats
-A minimalistic Terra account querying app.
+A minimalistic Terra stats querying app.

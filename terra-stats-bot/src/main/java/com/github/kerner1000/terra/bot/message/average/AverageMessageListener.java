@@ -2,6 +2,7 @@ package com.github.kerner1000.terra.bot.message.average;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.kerner1000.terra.bot.feign.AccountStatsApiClient;
+import com.github.kerner1000.terra.commons.Stats;
 import com.github.kerner1000.terra.commons.SwapPrices;
 import com.github.kerner1000.terra.commons.Util;
 import discord4j.core.object.entity.Message;
@@ -80,7 +81,7 @@ public abstract class AverageMessageListener {
 
                 SwapPrices swapPrices = new SwapPrices(Util.weightedMean(buySellSwaps.getBuy().getSwaps()),Util.weightedMean(buySellSwaps.getSell().getSwaps()));
 
-                return "```"+ swapPrices + "```";
+                return "```"+ new Stats(buySellSwaps, swapPrices) + "```";
             }
         } catch(Exception e){
             log.error(e.getLocalizedMessage(), e);

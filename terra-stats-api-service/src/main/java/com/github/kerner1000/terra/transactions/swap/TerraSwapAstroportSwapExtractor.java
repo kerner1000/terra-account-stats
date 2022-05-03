@@ -7,7 +7,7 @@ import com.github.kerner1000.terra.transactions.Transactions;
 
 public class TerraSwapAstroportSwapExtractor implements SwapExtractor {
 
-    public ExtractedSwap extract(ExecuteMessage executeMessage) {
+    public ExtractedSwap extract(String txHash, ExecuteMessage executeMessage) {
         Swap swap = executeMessage.getSwap();
         if(swap != null) {
             BuySellMaps buySellMaps = new BuySellMaps();
@@ -15,12 +15,12 @@ public class TerraSwapAstroportSwapExtractor implements SwapExtractor {
             double simpleAmount = Constants.simpleAmount(swap.getOfferAsset().getAmount().doubleValue());
             SwapType swapType;
             if (Transactions.BUY_WITH_UST.test(swap)) {
-                buySellMaps.addBuy(price, simpleAmount);
+                buySellMaps.addBuy(txHash, price, simpleAmount);
                 swapType = new SwapType(Coin.UST, Coin.LUNA);
             } else if (Transactions.BUY_WITH_LUNA.test(swap)) {
                 price = 1 / price;
                 swapType = new SwapType(Coin.LUNA, Coin.UST);
-                buySellMaps.addSell(price, simpleAmount);
+                buySellMaps.addSell(txHash, price, simpleAmount);
             } else
                 throw new IllegalStateException();
             return new ExtractedSwap(swapType, buySellMaps);

@@ -19,7 +19,7 @@ public abstract class SwapTransactionVisitor extends AbstractTransactionVisitor 
                     for (Msg msg : value.getMsgList()) {
                         if (msg != null) {
                             MsgValue msgValue = msg.getValue();
-                            ExtractedSwap extractedSwap = getExtractedSwap(msgValue);
+                            ExtractedSwap extractedSwap = getExtractedSwap(transaction.getTxhash(), msgValue);
                             if (extractedSwap != null)
                                 result.add(extractedSwap.swapMaps());
                         }
@@ -30,5 +30,5 @@ public abstract class SwapTransactionVisitor extends AbstractTransactionVisitor 
         return result;
     }
 
-    protected abstract ExtractedSwap getExtractedSwap(MsgValue msgValue);
+    protected abstract ExtractedSwap getExtractedSwap(String txHash, MsgValue msgValue);
 }

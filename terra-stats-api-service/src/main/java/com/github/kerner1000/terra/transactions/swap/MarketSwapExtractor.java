@@ -9,7 +9,7 @@ import static com.github.kerner1000.terra.Coin.UST;
 
 public class MarketSwapExtractor implements SwapExtractor {
 
-    public ExtractedSwap extract(ExecuteMessage executeMessage) {
+    public ExtractedSwap extract(String txHash, ExecuteMessage executeMessage) {
         BuySellMaps buySellMaps = new BuySellMaps();
         AssertLimitOrder assertLimitOrder = executeMessage.getAssertLimitOrder();
         double receiveAmount = assertLimitOrder.getMinimumReceive().doubleValue();
@@ -19,11 +19,11 @@ public class MarketSwapExtractor implements SwapExtractor {
         SwapType swapType;
         if ("uluna".equals(assertLimitOrder.getAskDenom())) {
             price = nativeAmount / receiveAmount;
-            buySellMaps.addBuy(price, simpleAmount);
+            buySellMaps.addBuy(txHash, price, simpleAmount);
             swapType = new SwapType(UST, LUNA);
         } else if ("uusd".equals(assertLimitOrder.getAskDenom())) {
             price = receiveAmount / nativeAmount;
-            buySellMaps.addSell(price, simpleAmount);
+            buySellMaps.addSell(txHash, price, simpleAmount);
             swapType = new SwapType(LUNA, UST);
         } else
             throw new IllegalStateException();

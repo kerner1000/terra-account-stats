@@ -12,10 +12,10 @@ public class MarketTransactionVisitor extends SwapTransactionVisitor {
 
     private final static MarketSwapExtractor swapExtractor = new MarketSwapExtractor();
 
-    protected ExtractedSwap getExtractedSwap(MsgValue msgValue) {
+    protected ExtractedSwap getExtractedSwap(String txHash, MsgValue msgValue) {
         if (SwapPairs.Market.LUNA_UST.equals(msgValue.getContract())) {
             if (msgValue.getExecuteMessage() != null) {
-                var result = swapExtractor.extract(msgValue.getExecuteMessage());
+                var result = swapExtractor.extract(txHash, msgValue.getExecuteMessage());
 //                log.debug("Found Market swap: {}", result);
                 return result;
             }

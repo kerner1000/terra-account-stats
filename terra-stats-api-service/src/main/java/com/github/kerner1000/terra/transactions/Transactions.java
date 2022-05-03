@@ -1,36 +1,21 @@
 package com.github.kerner1000.terra.transactions;
 
-import com.github.kerner1000.terra.*;
-import com.github.kerner1000.terra.json.data.*;
+import com.github.kerner1000.terra.BuySellMaps;
+import com.github.kerner1000.terra.SwapPairs;
+import com.github.kerner1000.terra.SwapPrices;
+import com.github.kerner1000.terra.json.data.Additional;
+import com.github.kerner1000.terra.json.data.Swap;
+import com.github.kerner1000.terra.json.data.Transaction;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
-import java.util.function.ToDoubleFunction;
-import java.util.stream.Collector;
 
 @Slf4j
 public class Transactions {
-
-    static <T> Collector<T, ?, Double> averagingWeighted(ToDoubleFunction<T> valueFunction, ToDoubleFunction<T> weightFunction) {
-        class Box {
-            double num = 0;
-            double denom = 0;
-        }
-        return Collector.of(
-                Box::new,
-                (b, e) -> {
-                    b.num += valueFunction.applyAsDouble(e) * weightFunction.applyAsDouble(e);
-                    b.denom += weightFunction.applyAsDouble(e);
-                },
-                (b1, b2) -> {
-                    b1.num += b2.num;
-                    b1.denom += b2.denom;
-                    return b1;
-                },
-                b -> b.num / b.denom
-        );
-    }
 
     public static final Predicate<Swap> BUY_WITH_UST = s -> s != null && "uusd".equals(s.getOfferAsset().getInfo().getNativeToken().getDenom());
 
@@ -64,8 +49,22 @@ public class Transactions {
         return getWeightedMean(result);
     }
 
-    public static SwapPrices getWeightedMean(BuySellMaps swapResult) {
-        return new SwapPrices(swapResult.getBuyMap().entrySet().stream().collect(averagingWeighted(Map.Entry::getKey, Map.Entry::getValue)), swapResult.getSellMap().entrySet().stream().collect(averagingWeighted(Map.Entry::getKey, Map.Entry::getValue)));
+    public SwapPrices getWeightedMean(BuySellMaps swapResult) {
+        return new SwapPrices(weightedMean(swapResult.getBuyMap()), weightedMean(swapResult.getSellMap()));
+    }
+
+    static double weightedMean(Map<BuySellMaps.Key, Number> map) {
+
+
+        double num = 0;
+        double denom = 0;
+        for (Map.Entry<BuySellMaps.Key, Number> entry : map.entrySet()) {
+            num += entry.getKey().price().doubleValue() * entry.getValue().doubleValue();
+            denom += entry.getValue().doubleValue();
+        }
+
+        return num / denom;
+
     }
 
 }

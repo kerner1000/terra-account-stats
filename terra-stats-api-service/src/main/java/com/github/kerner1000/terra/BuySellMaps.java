@@ -1,18 +1,31 @@
 package com.github.kerner1000.terra;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BuySellMaps {
 
-    // offer coin is UST
-    private final Map<Integer, Integer> buyMap;
-    // receive coin is UST
-    private final Map<Integer, Integer> sellMap;
+    public record Key(String id, Number price) implements Comparable<Key> {
 
-    public BuySellMaps(Map<Integer, Integer> buyMap, Map<Integer, Integer> sellMap) {
+        @Override
+            public int compareTo(Key o) {
+                return Double.compare(this.price.doubleValue(), o.price.doubleValue());
+            }
+
+        @Override
+            public String toString() {
+                return "[" +
+                        "id=" + id + ", " +
+                        "price=" + price + ']';
+            }
+        }
+
+    // offer coin is UST
+    private final Map<Key, Number> buyMap;
+    // receive coin is UST
+    private final Map<Key, Number> sellMap;
+
+    public BuySellMaps(Map<Key, Number> buyMap, Map<Key, Number> sellMap) {
         this();
         addBuys(buyMap);
         addSells(sellMap);
@@ -28,11 +41,11 @@ public class BuySellMaps {
         this.sellMap = new TreeMap<>(Collections.reverseOrder());
     }
 
-    public Map<Integer, Integer> getBuyMap() {
+    public Map<Key, Number> getBuyMap() {
         return Collections.unmodifiableMap(buyMap);
     }
 
-    public Map<Integer, Integer> getSellMap() {
+    public Map<Key, Number> getSellMap() {
         return Collections.unmodifiableMap(sellMap);
     }
 
@@ -41,44 +54,59 @@ public class BuySellMaps {
         buySellMaps.sellMap.entrySet().forEach(e-> add(e, sellMap));
     }
 
-    public void addBuys(Map<? extends Number, ? extends Number> priceMaps) {
+    public void addBuys(Map<Key, ? extends Number> priceMaps) {
         priceMaps.entrySet().forEach(e -> add(e, buyMap));
     }
 
-    public void addSells(Map<? extends Number, ? extends Number> priceMaps) {
+    public void addSells(Map<Key, ? extends Number> priceMaps) {
         priceMaps.entrySet().forEach(e -> add(e, sellMap));
     }
 
-    public void addBuy(Number buyPrice, Number buyAmount){
+    public void addBuy(Key buyPrice, Number buyAmount){
         add(buyPrice, buyAmount, buyMap);
     }
 
-    public void addSell(Number sellPrice, Number sellAmount){
+    public void addBuy(Number buyPrice, Number buyAmount){
+        add("dummy-id-"+new Random().nextInt(), buyPrice, buyAmount, buyMap);
+    }
+
+    public void addBuy(String id, Number buyPrice, Number buyAmount){
+        add(new Key(id, buyPrice), buyAmount, buyMap);
+    }
+
+    public void addSell(Key sellPrice, Number sellAmount){
         add(sellPrice, sellAmount, sellMap);
     }
 
-    private static void add(Number price, Number amount, Map<Integer, Integer> map){
-        Integer key = Math.toIntExact(Math.round(price.doubleValue()));
-        Integer value = map.getOrDefault(key, 0);
-        value = Math.addExact(value, Math.toIntExact(Math.round(amount.doubleValue())));
-        map.put(key, value);
+    public void addSell(String id, Number sellPrice, Number sellAmount){
+        add(new Key(id, sellPrice), sellAmount, sellMap);
     }
 
-    private static void add(Map.Entry<? extends Number, ? extends Number> priceAmountMapEntry, Map<Integer, Integer> map){
+    public void addSell(Number sellPrice, Number sellAmount){
+        add(new Key("dummy-id-"+ new Random().nextInt(), sellPrice), sellAmount, sellMap);
+    }
+
+    private static void add(Key price, Number amount, Map<Key, Number> map){
+        map.put(price, amount);
+    }
+
+    private static void add(String txHash, Number price, Number amount, Map<Key, Number> map){
+        map.put(new Key(txHash, price), amount);
+    }
+
+    private static void add(Map.Entry<Key, ? extends Number> priceAmountMapEntry, Map<Key, Number> map){
         add(priceAmountMapEntry.getKey(), priceAmountMapEntry.getValue(), map);
     }
 
     @Override
     public String toString() {
         return
-                "buy: price, amount:\n" + buyMap.entrySet().stream().map(this::map).collect(Collectors.joining("\n")) +
-                "\nsell: price,amount:\n" + sellMap.entrySet().stream().map(this::map).collect(Collectors.joining("\n"))
+                "buy: id, price, amount:\n" + buyMap.entrySet().stream().map(this::entryToString).collect(Collectors.joining("\n")) +
+                "\nsell: id, price, amount:\n" + sellMap.entrySet().stream().map(this::entryToString).collect(Collectors.joining("\n"))
                 ;
     }
 
-    private String map(Map.Entry<Integer, Integer> mapEntry) {
-        String price = String.format("%,10d",mapEntry.getKey());
-        String amount = String.format("%,7d",mapEntry.getValue());
-        return price + ": " + amount;
+    private String entryToString(Map.Entry<Key, Number> mapEntry) {
+        return mapEntry.getKey().id + ": " + mapEntry.getKey().price + ": " + mapEntry.getValue();
     }
 }

@@ -19,7 +19,7 @@ public class WeightedMeanCalculatorService {
         BuySellMaps wm = new Transactions().getWeightedMeanSwapMaps(transactions);
         result.add(wm);
         if(wm.getBuyMap().size() > 1 || wm.getSellMap().size() > 1) {
-            log.debug("Weighted mean map:\n{}\n======\nweighted mean: {}", result, Transactions.getWeightedMean(result));
+            log.debug("swap map:\n{}\n======\nweighted mean: {}", result, new Transactions().getWeightedMean(result));
         }
         return;
     }

@@ -5,9 +5,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @org.springframework.boot.autoconfigure.SpringBootApplication
 @EnableFeignClients
-public class SpringBootApplication {
+public class SpringBootApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootApplication.class, args);
+        SpringApplication.run(SpringBootApiApplication.class, args);
     }
 }

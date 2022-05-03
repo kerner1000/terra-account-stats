@@ -9,6 +9,8 @@ paths:
       summary: get the average prices for given token
       description: get the average prices for given token
       operationId: getAverageBuySell
+      tags:
+        - /average-buy-sell
       parameters:
         - name: token
           in: path
@@ -26,7 +28,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AverageBuySell'
+                $ref: '#/components/schemas/Stats'
         500:
           description: internal server error
           content:
@@ -35,7 +37,12 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    AverageBuySell:
+    Stats:
       type: object
+      properties:
+        buy-map:
+          type: object
+        sell-map:
+          type: object
     Error:
       type: object

@@ -4,15 +4,15 @@ info:
   description: Terra Stats OpenAPI contract
   version: 1.0.0
 paths:
-  /average-buy-sell/{token}/{terra-address}:
+  /swaps/{coin}/{terra-address}:
     get:
-      summary: get the average prices for given token
-      description: get the average prices for given token
-      operationId: getAverageBuySell
+      summary: get swaps for given coin
+      description: get swaps for given coin
+      operationId: getSwaps
       tags:
-        - /average-buy-sell
+        - /swaps
       parameters:
-        - name: token
+        - name: coin
           in: path
           schema:
             type: string
@@ -28,7 +28,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Stats'
+                $ref: '#/components/schemas/BuySellSwaps'
         500:
           description: internal server error
           content:
@@ -37,12 +37,28 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Stats:
+    SwapEntry:
       type: object
       properties:
-        buy-map:
-          type: object
-        sell-map:
-          type: object
+        id:
+          type: string
+        price:
+          type: number
+        amount:
+          type: number
+    Swaps:
+      type: object
+      properties:
+        swaps:
+          type: array
+          items:
+            $ref: '#/components/schemas/SwapEntry'
+    BuySellSwaps:
+      type: object
+      properties:
+        buy:
+          $ref: '#/components/schemas/Swaps'
+        sell:
+          $ref: '#/components/schemas/Swaps'
     Error:
       type: object

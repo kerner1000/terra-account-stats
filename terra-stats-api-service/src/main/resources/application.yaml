@@ -13,6 +13,10 @@ feign:
 
 app.terra.sleep-between-calls: 800
 
+spring:
+  main:
+    banner-mode: off
+
 ---
 spring:
   config:

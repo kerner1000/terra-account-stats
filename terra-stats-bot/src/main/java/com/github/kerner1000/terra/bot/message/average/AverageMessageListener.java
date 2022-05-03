@@ -2,10 +2,14 @@ package com.github.kerner1000.terra.bot.message.average;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.kerner1000.terra.bot.feign.AccountStatsApiClient;
+import com.github.kerner1000.terra.commons.SwapPrices;
+import com.github.kerner1000.terra.commons.Util;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.spec.MessageCreateMono;
 import lombok.extern.slf4j.Slf4j;
+import org.openapitools.model.BuySellSwaps;
+import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 
 import java.util.concurrent.CompletableFuture;
@@ -70,8 +74,13 @@ public abstract class AverageMessageListener {
         try {
             if (buyCommandString.startsWith("LUNA")) {
                 String terraAddress = buyCommandString.substring("LUNA".length()).trim();
-                String average = accountStatsApiClient.getFuu(terraAddress);
-                return "```\n"+average+"\n```";
+                ResponseEntity<BuySellSwaps> apiResponse = accountStatsApiClient.getSwaps("Luna", terraAddress);
+
+                BuySellSwaps buySellSwaps = apiResponse.getBody();
+
+                SwapPrices swapPrices = new SwapPrices(Util.weightedMean(buySellSwaps.getBuy().getSwaps()),Util.weightedMean(buySellSwaps.getSell().getSwaps()));
+
+                return "```"+ swapPrices + "```";
             }
         } catch(Exception e){
             log.error(e.getLocalizedMessage(), e);

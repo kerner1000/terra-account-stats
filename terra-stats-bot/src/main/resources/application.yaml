@@ -15,3 +15,7 @@ feign:
 
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"
+
+spring:
+  main:
+    banner-mode: off

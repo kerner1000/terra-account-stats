@@ -27,6 +27,7 @@
         <module>terra-stats-api-service</module>
         <module>terra-stats-contract</module>
         <module>terra-stats-bot</module>
+        <module>terra-stats-commons</module>
     </modules>
 
     <dependencyManagement>

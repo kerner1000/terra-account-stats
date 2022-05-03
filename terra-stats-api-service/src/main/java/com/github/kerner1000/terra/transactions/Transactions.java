@@ -2,7 +2,7 @@ package com.github.kerner1000.terra.transactions;
 
 import com.github.kerner1000.terra.BuySellMaps;
 import com.github.kerner1000.terra.SwapPairs;
-import com.github.kerner1000.terra.SwapPrices;
+import com.github.kerner1000.terra.commons.SwapPrices;
 import com.github.kerner1000.terra.json.data.Additional;
 import com.github.kerner1000.terra.json.data.Swap;
 import com.github.kerner1000.terra.json.data.Transaction;
@@ -45,8 +45,7 @@ public class Transactions {
     }
 
     public SwapPrices getWeightedMean(Collection<? extends Transaction> transactionsList) throws InterruptedException {
-        BuySellMaps result = getWeightedMeanSwapMaps(transactionsList);
-        return getWeightedMean(result);
+        return getWeightedMean(getWeightedMeanSwapMaps(transactionsList));
     }
 
     public SwapPrices getWeightedMean(BuySellMaps swapResult) {
@@ -66,5 +65,7 @@ public class Transactions {
         return num / denom;
 
     }
+
+
 
 }

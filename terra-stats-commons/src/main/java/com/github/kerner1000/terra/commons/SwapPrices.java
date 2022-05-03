@@ -1,4 +1,4 @@
-package com.github.kerner1000.terra;
+package com.github.kerner1000.terra.commons;
 
 public record SwapPrices(double buy, double sell) {
 

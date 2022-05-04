@@ -1,6 +1,7 @@
 package com.github.kerner1000.terra.json.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,21 +23,19 @@ public class Additional {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    public static List<ExecuteMessage> extract(List<String> executeMessageStrings) {
+    public static List<ExecuteMessage> extract(List<String> executeMessageStrings) throws JsonProcessingException {
         List<ExecuteMessage> result = new ArrayList<>();
         for (String messageString : executeMessageStrings) {
-            try {
+
                 ExecuteMessage messageObject = objectMapper.readValue(messageString, new TypeReference<ExecuteMessage>() {
                 });
                 result.add(messageObject);
-            } catch (Exception e) {
-//                log.debug("Failed to extract execute messages from string {}", messageString);
-            }
+
         }
         return result;
     }
 
-    public static List<ExecuteMessage> extract(String executeMessageString) {
+    public static List<ExecuteMessage> extract(String executeMessageString) throws JsonProcessingException {
         return extract(Collections.singletonList(executeMessageString));
     }
 
@@ -48,7 +47,11 @@ public class Additional {
     @JsonProperty("execute_message")
     public void setExecuteMessageStrings(List<String> executeMessageStrings) {
         this.executeMessageStrings = executeMessageStrings;
-        this.executeMessages = extract(executeMessageStrings);
+        try {
+            this.executeMessages = extract(executeMessageStrings);
+        } catch (JsonProcessingException e) {
+            log.debug("Failed to extract execute messages from strings {}", executeMessageStrings);
+        }
     }
 
     List<ExecuteMessage> executeMessages;

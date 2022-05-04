@@ -1,6 +1,7 @@
 package com.github.kerner1000.terra.transactions;
 
-import com.github.kerner1000.terra.BuySellMaps;
+import com.github.kerner1000.terra.commons.BuySellMap;
+import com.github.kerner1000.terra.commons.BuySellMaps;
 import com.github.kerner1000.terra.SwapPairs;
 import com.github.kerner1000.terra.commons.SwapPrices;
 import com.github.kerner1000.terra.json.data.Additional;
@@ -27,7 +28,7 @@ public class Transactions {
 
     static final Predicate<Additional> ASTROPORT_FILTER = a -> a != null && a.getContract() != null && a.getContract().stream().anyMatch(c -> c.contains(SwapPairs.Astroport.LUNA_UST));
 
-    private final List<AbstractTransactionVisitor> visitors = Arrays.asList(new TerraswapTransactionVisitor(), new AstroportTransactionVisitor(), new MarketTransactionVisitor());
+    private final List<AbstractTransactionVisitor> visitors = Arrays.asList(new TerraswapTransactionVisitor(), new AstroportTransactionVisitor(), new MarketTransactionVisitor(), new LoopSwapTransactionVisitor());
 
     public BuySellMaps getWeightedMeanSwapMaps(Collection<? extends Transaction> transactionsList) throws InterruptedException {
 
@@ -52,12 +53,12 @@ public class Transactions {
         return new SwapPrices(weightedMean(swapResult.getBuyMap()), weightedMean(swapResult.getSellMap()));
     }
 
-    static double weightedMean(Map<BuySellMaps.Key, Number> map) {
+    static double weightedMean(BuySellMap map) {
 
 
         double num = 0;
         double denom = 0;
-        for (Map.Entry<BuySellMaps.Key, Number> entry : map.entrySet()) {
+        for (Map.Entry<BuySellMap.Key, Number> entry : map.getMap().entrySet()) {
             num += entry.getKey().price().doubleValue() * entry.getValue().doubleValue();
             denom += entry.getValue().doubleValue();
         }

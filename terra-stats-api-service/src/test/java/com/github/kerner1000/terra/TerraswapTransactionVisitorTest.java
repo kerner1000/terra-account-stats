@@ -34,8 +34,8 @@ class TerraswapTransactionVisitorTest {
         Transaction transaction = objectMapper.readValue(new File("src/test/resources/example-transaction-terraswap-UST-to-LUNA.json"), Transaction.class);
         var result = transactionVisitor.visit(transaction);
         assertNotNull(result);
-       assertEquals(1,result.getBuyMap().size());
-       assertEquals(0,result.getSellMap().size());
+       assertEquals(1,result.getBuyMap().getMap().size());
+       assertEquals(0,result.getSellMap().getMap().size());
 
     }
 

@@ -1,0 +1,654 @@
+{
+  "height": "7506595",
+  "txhash": "684F5CA6E8F4D3E8125748839ADD80020DF58396C00FB28509A9B72C0D1263C6",
+  "data": "0A280A262F74657272612E7761736D2E763162657461312E4D736745786563757465436F6E7472616374",
+  "raw_log": "[{\"events\":[{\"type\":\"coin_received\",\"attributes\":[{\"key\":\"receiver\",\"value\":\"terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv\"},{\"key\":\"amount\",\"value\":\"10000000uusd\"},{\"key\":\"receiver\",\"value\":\"terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js\"},{\"key\":\"amount\",\"value\":\"118860uluna\"}]},{\"type\":\"coin_spent\",\"attributes\":[{\"key\":\"spender\",\"value\":\"terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js\"},{\"key\":\"amount\",\"value\":\"10000000uusd\"},{\"key\":\"spender\",\"value\":\"terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv\"},{\"key\":\"amount\",\"value\":\"118860uluna\"}]},{\"type\":\"execute_contract\",\"attributes\":[{\"key\":\"sender\",\"value\":\"terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js\"},{\"key\":\"contract_address\",\"value\":\"terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv\"}]},{\"type\":\"from_contract\",\"attributes\":[{\"key\":\"contract_address\",\"value\":\"terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv\"},{\"key\":\"action\",\"value\":\"swap\"},{\"key\":\"sender\",\"value\":\"terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js\"},{\"key\":\"receiver\",\"value\":\"terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js\"},{\"key\":\"offer_asset\",\"value\":\"uusd\"},{\"key\":\"ask_asset\",\"value\":\"uluna\"},{\"key\":\"offer_amount\",\"value\":\"10000000\"},{\"key\":\"return_amount\",\"value\":\"118860\"},{\"key\":\"tax_amount\",\"value\":\"0\"},{\"key\":\"spread_amount\",\"value\":\"0\"},{\"key\":\"commission_amount\",\"value\":\"357\"}]},{\"type\":\"message\",\"attributes\":[{\"key\":\"action\",\"value\":\"/terra.wasm.v1beta1.MsgExecuteContract\"},{\"key\":\"module\",\"value\":\"wasm\"},{\"key\":\"sender\",\"value\":\"terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js\"},{\"key\":\"sender\",\"value\":\"terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js\"},{\"key\":\"sender\",\"value\":\"terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv\"},{\"key\":\"module\",\"value\":\"bank\"}]},{\"type\":\"transfer\",\"attributes\":[{\"key\":\"recipient\",\"value\":\"terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv\"},{\"key\":\"sender\",\"value\":\"terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js\"},{\"key\":\"amount\",\"value\":\"10000000uusd\"},{\"key\":\"recipient\",\"value\":\"terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js\"},{\"key\":\"sender\",\"value\":\"terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv\"},{\"key\":\"amount\",\"value\":\"118860uluna\"}]},{\"type\":\"wasm\",\"attributes\":[{\"key\":\"contract_address\",\"value\":\"terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv\"},{\"key\":\"action\",\"value\":\"swap\"},{\"key\":\"sender\",\"value\":\"terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js\"},{\"key\":\"receiver\",\"value\":\"terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js\"},{\"key\":\"offer_asset\",\"value\":\"uusd\"},{\"key\":\"ask_asset\",\"value\":\"uluna\"},{\"key\":\"offer_amount\",\"value\":\"10000000\"},{\"key\":\"return_amount\",\"value\":\"118860\"},{\"key\":\"tax_amount\",\"value\":\"0\"},{\"key\":\"spread_amount\",\"value\":\"0\"},{\"key\":\"commission_amount\",\"value\":\"357\"}]}]}]",
+  "logs": [
+    {
+      "events": [
+        {
+          "type": "coin_received",
+          "attributes": [
+            {
+              "key": "receiver",
+              "value": "terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv"
+            },
+            {
+              "key": "amount",
+              "value": "10000000uusd"
+            },
+            {
+              "key": "receiver",
+              "value": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js"
+            },
+            {
+              "key": "amount",
+              "value": "118860uluna"
+            }
+          ]
+        },
+        {
+          "type": "coin_spent",
+          "attributes": [
+            {
+              "key": "spender",
+              "value": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js"
+            },
+            {
+              "key": "amount",
+              "value": "10000000uusd"
+            },
+            {
+              "key": "spender",
+              "value": "terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv"
+            },
+            {
+              "key": "amount",
+              "value": "118860uluna"
+            }
+          ]
+        },
+        {
+          "type": "execute_contract",
+          "attributes": [
+            {
+              "key": "sender",
+              "value": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js"
+            },
+            {
+              "key": "contract_address",
+              "value": "terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv"
+            }
+          ]
+        },
+        {
+          "type": "from_contract",
+          "attributes": [
+            {
+              "key": "contract_address",
+              "value": "terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv"
+            },
+            {
+              "key": "action",
+              "value": "swap"
+            },
+            {
+              "key": "sender",
+              "value": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js"
+            },
+            {
+              "key": "receiver",
+              "value": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js"
+            },
+            {
+              "key": "offer_asset",
+              "value": "uusd"
+            },
+            {
+              "key": "ask_asset",
+              "value": "uluna"
+            },
+            {
+              "key": "offer_amount",
+              "value": "10000000"
+            },
+            {
+              "key": "return_amount",
+              "value": "118860"
+            },
+            {
+              "key": "tax_amount",
+              "value": "0"
+            },
+            {
+              "key": "spread_amount",
+              "value": "0"
+            },
+            {
+              "key": "commission_amount",
+              "value": "357"
+            }
+          ]
+        },
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "action",
+              "value": "/terra.wasm.v1beta1.MsgExecuteContract"
+            },
+            {
+              "key": "module",
+              "value": "wasm"
+            },
+            {
+              "key": "sender",
+              "value": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js"
+            },
+            {
+              "key": "sender",
+              "value": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js"
+            },
+            {
+              "key": "sender",
+              "value": "terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv"
+            },
+            {
+              "key": "module",
+              "value": "bank"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "attributes": [
+            {
+              "key": "recipient",
+              "value": "terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv"
+            },
+            {
+              "key": "sender",
+              "value": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js"
+            },
+            {
+              "key": "amount",
+              "value": "10000000uusd"
+            },
+            {
+              "key": "recipient",
+              "value": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js"
+            },
+            {
+              "key": "sender",
+              "value": "terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv"
+            },
+            {
+              "key": "amount",
+              "value": "118860uluna"
+            }
+          ]
+        },
+        {
+          "type": "wasm",
+          "attributes": [
+            {
+              "key": "contract_address",
+              "value": "terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv"
+            },
+            {
+              "key": "action",
+              "value": "swap"
+            },
+            {
+              "key": "sender",
+              "value": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js"
+            },
+            {
+              "key": "receiver",
+              "value": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js"
+            },
+            {
+              "key": "offer_asset",
+              "value": "uusd"
+            },
+            {
+              "key": "ask_asset",
+              "value": "uluna"
+            },
+            {
+              "key": "offer_amount",
+              "value": "10000000"
+            },
+            {
+              "key": "return_amount",
+              "value": "118860"
+            },
+            {
+              "key": "tax_amount",
+              "value": "0"
+            },
+            {
+              "key": "spread_amount",
+              "value": "0"
+            },
+            {
+              "key": "commission_amount",
+              "value": "357"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "gas_wanted": "177619",
+  "gas_used": "128780",
+  "tx": {
+    "type": "core/StdTx",
+    "value": {
+      "msg": [
+        {
+          "type": "wasm/MsgExecuteContract",
+          "value": {
+            "sender": "terra1cm4t47pzkg0kqt53ypdpzmp77d24lmawqpw2js",
+            "contract": "terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv",
+            "execute_msg": {
+              "swap": {
+                "belief_price": "84.134008648976089114",
+                "max_spread": "0.05",
+                "offer_asset": {
+                  "amount": "10000000",
+                  "info": {
+                    "native_token": {
+                      "denom": "uusd"
+                    }
+                  }
+                }
+              }
+            },
+            "coins": [
+              {
+                "denom": "uusd",
+                "amount": "10000000"
+              }
+            ]
+          }
+        }
+      ],
+      "fee": {
+        "amount": [
+          {
+            "denom": "uusd",
+            "amount": "26643"
+          }
+        ],
+        "gas": "177619"
+      },
+      "signatures": [],
+      "memo": "",
+      "timeout_height": "0"
+    }
+  },
+  "timestamp": "2022-05-04T16:12:17Z",
+  "events": [
+    {
+      "type": "coin_spent",
+      "attributes": [
+        {
+          "key": "c3BlbmRlcg==",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        },
+        {
+          "key": "YW1vdW50",
+          "value": "MjY2NDN1dXNk",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "coin_received",
+      "attributes": [
+        {
+          "key": "cmVjZWl2ZXI=",
+          "value": "dGVycmExN3hwZnZha20yYW1nOTYyeWxzNmY4NHoza2VsbDhjNWxrYWVxZmE=",
+          "index": true
+        },
+        {
+          "key": "YW1vdW50",
+          "value": "MjY2NDN1dXNk",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "transfer",
+      "attributes": [
+        {
+          "key": "cmVjaXBpZW50",
+          "value": "dGVycmExN3hwZnZha20yYW1nOTYyeWxzNmY4NHoza2VsbDhjNWxrYWVxZmE=",
+          "index": true
+        },
+        {
+          "key": "c2VuZGVy",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        },
+        {
+          "key": "YW1vdW50",
+          "value": "MjY2NDN1dXNk",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "c2VuZGVy",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "tx",
+      "attributes": [
+        {
+          "key": "ZmVl",
+          "value": "MjY2NDN1dXNk",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "tx",
+      "attributes": [
+        {
+          "key": "YWNjX3NlcQ==",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanMvMzU4Mw==",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "tx",
+      "attributes": [
+        {
+          "key": "c2lnbmF0dXJl",
+          "value": "dnIvb3g2WjJxa3VKTU9rR0VpZXhtRUN6SVlmYzF1RFhOVk1UY0tTVWg2SkxSV0JhQ05IUmVoM0RxZkZVNGpiVkM3MFg4WXhEMGphTE1CVjI1ZFNqcXc9PQ==",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "YWN0aW9u",
+          "value": "L3RlcnJhLndhc20udjFiZXRhMS5Nc2dFeGVjdXRlQ29udHJhY3Q=",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "execute_contract",
+      "attributes": [
+        {
+          "key": "c2VuZGVy",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        },
+        {
+          "key": "Y29udHJhY3RfYWRkcmVzcw==",
+          "value": "dGVycmExc2d1NnljYTZ5amswYTM0bDg2dTZqdTRhcGpjZDZyZWZ3dWhnenY=",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "bW9kdWxl",
+          "value": "d2FzbQ==",
+          "index": true
+        },
+        {
+          "key": "c2VuZGVy",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "coin_spent",
+      "attributes": [
+        {
+          "key": "c3BlbmRlcg==",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        },
+        {
+          "key": "YW1vdW50",
+          "value": "MTAwMDAwMDB1dXNk",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "coin_received",
+      "attributes": [
+        {
+          "key": "cmVjZWl2ZXI=",
+          "value": "dGVycmExc2d1NnljYTZ5amswYTM0bDg2dTZqdTRhcGpjZDZyZWZ3dWhnenY=",
+          "index": true
+        },
+        {
+          "key": "YW1vdW50",
+          "value": "MTAwMDAwMDB1dXNk",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "transfer",
+      "attributes": [
+        {
+          "key": "cmVjaXBpZW50",
+          "value": "dGVycmExc2d1NnljYTZ5amswYTM0bDg2dTZqdTRhcGpjZDZyZWZ3dWhnenY=",
+          "index": true
+        },
+        {
+          "key": "c2VuZGVy",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        },
+        {
+          "key": "YW1vdW50",
+          "value": "MTAwMDAwMDB1dXNk",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "c2VuZGVy",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "wasm",
+      "attributes": [
+        {
+          "key": "Y29udHJhY3RfYWRkcmVzcw==",
+          "value": "dGVycmExc2d1NnljYTZ5amswYTM0bDg2dTZqdTRhcGpjZDZyZWZ3dWhnenY=",
+          "index": true
+        },
+        {
+          "key": "YWN0aW9u",
+          "value": "c3dhcA==",
+          "index": true
+        },
+        {
+          "key": "c2VuZGVy",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        },
+        {
+          "key": "cmVjZWl2ZXI=",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        },
+        {
+          "key": "b2ZmZXJfYXNzZXQ=",
+          "value": "dXVzZA==",
+          "index": true
+        },
+        {
+          "key": "YXNrX2Fzc2V0",
+          "value": "dWx1bmE=",
+          "index": true
+        },
+        {
+          "key": "b2ZmZXJfYW1vdW50",
+          "value": "MTAwMDAwMDA=",
+          "index": true
+        },
+        {
+          "key": "cmV0dXJuX2Ftb3VudA==",
+          "value": "MTE4ODYw",
+          "index": true
+        },
+        {
+          "key": "dGF4X2Ftb3VudA==",
+          "value": "MA==",
+          "index": true
+        },
+        {
+          "key": "c3ByZWFkX2Ftb3VudA==",
+          "value": "MA==",
+          "index": true
+        },
+        {
+          "key": "Y29tbWlzc2lvbl9hbW91bnQ=",
+          "value": "MzU3",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "from_contract",
+      "attributes": [
+        {
+          "key": "Y29udHJhY3RfYWRkcmVzcw==",
+          "value": "dGVycmExc2d1NnljYTZ5amswYTM0bDg2dTZqdTRhcGpjZDZyZWZ3dWhnenY=",
+          "index": true
+        },
+        {
+          "key": "YWN0aW9u",
+          "value": "c3dhcA==",
+          "index": true
+        },
+        {
+          "key": "c2VuZGVy",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        },
+        {
+          "key": "cmVjZWl2ZXI=",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        },
+        {
+          "key": "b2ZmZXJfYXNzZXQ=",
+          "value": "dXVzZA==",
+          "index": true
+        },
+        {
+          "key": "YXNrX2Fzc2V0",
+          "value": "dWx1bmE=",
+          "index": true
+        },
+        {
+          "key": "b2ZmZXJfYW1vdW50",
+          "value": "MTAwMDAwMDA=",
+          "index": true
+        },
+        {
+          "key": "cmV0dXJuX2Ftb3VudA==",
+          "value": "MTE4ODYw",
+          "index": true
+        },
+        {
+          "key": "dGF4X2Ftb3VudA==",
+          "value": "MA==",
+          "index": true
+        },
+        {
+          "key": "c3ByZWFkX2Ftb3VudA==",
+          "value": "MA==",
+          "index": true
+        },
+        {
+          "key": "Y29tbWlzc2lvbl9hbW91bnQ=",
+          "value": "MzU3",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "coin_spent",
+      "attributes": [
+        {
+          "key": "c3BlbmRlcg==",
+          "value": "dGVycmExc2d1NnljYTZ5amswYTM0bDg2dTZqdTRhcGpjZDZyZWZ3dWhnenY=",
+          "index": true
+        },
+        {
+          "key": "YW1vdW50",
+          "value": "MTE4ODYwdWx1bmE=",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "coin_received",
+      "attributes": [
+        {
+          "key": "cmVjZWl2ZXI=",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        },
+        {
+          "key": "YW1vdW50",
+          "value": "MTE4ODYwdWx1bmE=",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "transfer",
+      "attributes": [
+        {
+          "key": "cmVjaXBpZW50",
+          "value": "dGVycmExY200dDQ3cHprZzBrcXQ1M3lwZHB6bXA3N2QyNGxtYXdxcHcyanM=",
+          "index": true
+        },
+        {
+          "key": "c2VuZGVy",
+          "value": "dGVycmExc2d1NnljYTZ5amswYTM0bDg2dTZqdTRhcGpjZDZyZWZ3dWhnenY=",
+          "index": true
+        },
+        {
+          "key": "YW1vdW50",
+          "value": "MTE4ODYwdWx1bmE=",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "c2VuZGVy",
+          "value": "dGVycmExc2d1NnljYTZ5amswYTM0bDg2dTZqdTRhcGpjZDZyZWZ3dWhnenY=",
+          "index": true
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "attributes": [
+        {
+          "key": "bW9kdWxl",
+          "value": "YmFuaw==",
+          "index": true
+        }
+      ]
+    }
+  ]
+}

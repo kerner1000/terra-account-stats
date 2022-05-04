@@ -1,11 +1,14 @@
 package com.github.kerner1000.terra.transactions.swap;
 
 import com.github.kerner1000.terra.*;
+import com.github.kerner1000.terra.commons.BuySellMaps;
 import com.github.kerner1000.terra.json.data.ExecuteMessage;
 import com.github.kerner1000.terra.json.data.Swap;
 import com.github.kerner1000.terra.transactions.Transactions;
+import lombok.extern.slf4j.Slf4j;
 
-public class TerraSwapAstroportSwapExtractor implements SwapExtractor {
+@Slf4j
+public class TerraSwapAstroportLoopSwapExtractor implements SwapExtractor {
 
     public ExtractedSwap extract(String txHash, ExecuteMessage executeMessage) {
         Swap swap = executeMessage.getSwap();
@@ -24,6 +27,8 @@ public class TerraSwapAstroportSwapExtractor implements SwapExtractor {
             } else
                 throw new IllegalStateException();
             return new ExtractedSwap(swapType, buySellMaps);
+        } else {
+            log.debug("No swap found for Tx {}", txHash);
         }
         return null;
     }

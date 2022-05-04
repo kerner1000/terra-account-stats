@@ -4,13 +4,13 @@ import com.github.kerner1000.terra.ExtractedSwap;
 import com.github.kerner1000.terra.SwapPairs;
 import com.github.kerner1000.terra.json.data.*;
 import com.github.kerner1000.terra.transactions.swap.SwapTransactionVisitor;
-import com.github.kerner1000.terra.transactions.swap.TerraSwapAstroportSwapExtractor;
+import com.github.kerner1000.terra.transactions.swap.TerraSwapAstroportLoopSwapExtractor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class TerraswapTransactionVisitor extends SwapTransactionVisitor {
 
-    private final static TerraSwapAstroportSwapExtractor swapExtractor = new TerraSwapAstroportSwapExtractor();
+    private final static TerraSwapAstroportLoopSwapExtractor swapExtractor = new TerraSwapAstroportLoopSwapExtractor();
 
     protected ExtractedSwap getExtractedSwap(String txHash, MsgValue msgValue) {
         if(SwapPairs.TerraSwap.LUNA_UST.equals(msgValue.getContract())){

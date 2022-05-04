@@ -20,4 +20,10 @@ public class SwapPairs {
         public static String LUNA_UST = "terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552";
     }
 
+    public static class Loop {
+
+        public static String LUNA_UST = "terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv";
+
+    }
+
 }

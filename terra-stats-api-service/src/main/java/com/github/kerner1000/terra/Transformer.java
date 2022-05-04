@@ -1,5 +1,7 @@
 package com.github.kerner1000.terra;
 
+import com.github.kerner1000.terra.commons.BuySellMap;
+import com.github.kerner1000.terra.commons.BuySellMaps;
 import org.openapitools.model.BuySellSwaps;
 import org.openapitools.model.SwapEntry;
 import org.openapitools.model.Swaps;
@@ -13,14 +15,14 @@ public class Transformer {
         BuySellSwaps buySellSwaps = new BuySellSwaps();
         buySellSwaps.setBuy(new Swaps());
         buySellSwaps.setSell(new Swaps());
-        for(Map.Entry<BuySellMaps.Key, Number> element : maps.getBuyMap().entrySet()){
+        for(Map.Entry<BuySellMap.Key, Number> element : maps.getBuyMap().getMap().entrySet()){
             SwapEntry swapEntry = new SwapEntry();
             swapEntry.setId(element.getKey().id());
             swapEntry.setPrice(BigDecimal.valueOf(element.getKey().price().doubleValue()));
             swapEntry.setAmount(BigDecimal.valueOf(element.getValue().doubleValue()));
             buySellSwaps.getBuy().addSwapsItem(swapEntry);
         }
-        for(Map.Entry<BuySellMaps.Key, Number> element : maps.getSellMap().entrySet()){
+        for(Map.Entry<BuySellMap.Key, Number> element : maps.getSellMap().getMap().entrySet()){
             SwapEntry swapEntry = new SwapEntry();
             swapEntry.setId(element.getKey().id());
             swapEntry.setPrice(BigDecimal.valueOf(element.getKey().price().doubleValue()));

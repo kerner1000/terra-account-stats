@@ -1,6 +1,7 @@
 package com.github.kerner1000.terra;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.kerner1000.terra.commons.BinnedBuySellMaps;
 import com.github.kerner1000.terra.commons.SwapPrices;
 import com.github.kerner1000.terra.feign.DataHubClient;
 import com.github.kerner1000.terra.feign.LcdClient;
@@ -69,7 +70,12 @@ public class TerraAppController implements SwapsApi {
 
         SwapPrices result2 = new Transactions().getWeightedMean(callbackService.getMeanMap());
         log.info("Collected {} transactions, average swap price is {}", allTransactions.size(), result2);
-
+        double max = callbackService.getMeanMap().getBuyMap().getMap().keySet().stream().mapToDouble(k -> k.price().doubleValue()).max().orElse(0);
+        double min = 0;
+        var bins = BinnedBuySellMaps.BinFactory.buildFixedBinSize(min, max, 5);
+        BinnedBuySellMaps binnedBuySellMaps = new BinnedBuySellMaps<>(bins);
+        binnedBuySellMaps.add(callbackService.getMeanMap().getBuyMap());
+        log.debug("Buy price distribution:\n{}", binnedBuySellMaps.toAsciiHistogram(false));
         org.openapitools.model.BuySellSwaps result = Transformer.transform(callbackService.getMeanMap());
 
         return ResponseEntity.ok(result);

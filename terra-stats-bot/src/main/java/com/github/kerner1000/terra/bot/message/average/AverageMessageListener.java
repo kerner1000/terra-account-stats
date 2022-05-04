@@ -2,9 +2,7 @@ package com.github.kerner1000.terra.bot.message.average;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.kerner1000.terra.bot.feign.AccountStatsApiClient;
-import com.github.kerner1000.terra.commons.Stats;
-import com.github.kerner1000.terra.commons.SwapPrices;
-import com.github.kerner1000.terra.commons.Util;
+import com.github.kerner1000.terra.commons.*;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.spec.MessageCreateMono;
@@ -78,10 +76,13 @@ public abstract class AverageMessageListener {
                 ResponseEntity<BuySellSwaps> apiResponse = accountStatsApiClient.getSwaps("Luna", terraAddress);
 
                 BuySellSwaps buySellSwaps = apiResponse.getBody();
-
+                BuySellMap buyMap = new BuySellMap(buySellSwaps.getBuy());
+                BinnedBuySellMaps binnedBuyMap = BinnedBuySellMaps.buildWithFixBinSize(buyMap, 5);
+                BuySellMap sellMap = new BuySellMap(buySellSwaps.getSell());
+                BinnedBuySellMaps binnedSellMap = BinnedBuySellMaps.buildWithFixBinSize(sellMap, 5);
                 SwapPrices swapPrices = new SwapPrices(Util.weightedMean(buySellSwaps.getBuy().getSwaps()),Util.weightedMean(buySellSwaps.getSell().getSwaps()));
 
-                return "```"+ new Stats(buySellSwaps, swapPrices) + "```";
+                return "```Average swap prices: "+ swapPrices + "\n" + "Buy price distribution:\n"+binnedBuyMap.toAsciiHistogram(false) + "Sell price distribution:\n" + binnedSellMap.toAsciiHistogram(false) + "```";
             }
         } catch(Exception e){
             log.error(e.getLocalizedMessage(), e);

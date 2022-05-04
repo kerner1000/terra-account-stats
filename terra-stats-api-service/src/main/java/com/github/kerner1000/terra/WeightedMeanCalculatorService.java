@@ -1,5 +1,6 @@
 package com.github.kerner1000.terra;
 
+import com.github.kerner1000.terra.commons.BuySellMaps;
 import com.github.kerner1000.terra.json.data.Transaction;
 import com.github.kerner1000.terra.transactions.Transactions;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +19,9 @@ public class WeightedMeanCalculatorService {
     public void visit(List<Transaction> transactions) throws InterruptedException {
         BuySellMaps wm = new Transactions().getWeightedMeanSwapMaps(transactions);
         result.add(wm);
-        if(wm.getBuyMap().size() > 1 || wm.getSellMap().size() > 1) {
-            log.debug("swap map:\n{}\n======\nweighted mean: {}", result, new Transactions().getWeightedMean(result));
-        }
+//        if(log.isDebugEnabled() && wm.getBuyMap().getMap().size() > 1 || wm.getSellMap().getMap().size() > 1) {
+//            log.debug("swap map:\n{}\n======\nweighted mean: {}", result, new Transactions().getWeightedMean(result));
+//        }
         return;
     }
 

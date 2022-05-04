@@ -18,6 +18,8 @@ public class MarketTransactionVisitor extends SwapTransactionVisitor {
                 var result = swapExtractor.extract(txHash, msgValue.getExecuteMessage());
 //                log.debug("Found Market swap: {}", result);
                 return result;
+            } else {
+                log.debug("market swap without execute message, Tx: {}", txHash);
             }
         }
         return null;

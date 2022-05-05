@@ -11,7 +11,7 @@
 
     <groupId>kerner1000.terra</groupId>
     <artifactId>terra-stats-api-parent</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <packaging>pom</packaging>
 
@@ -29,7 +29,7 @@
         <connection>scm:git:https://github.com/${github-user}/${github-repo}.git</connection>
         <developerConnection>scm:git:git@github.com:${github-user}/${github-repo}.git</developerConnection>
         <url>https://github.com/${github-user}/${github-repo}</url>
-        <tag>HEAD</tag>
+        <tag>1.0.1</tag>
     </scm>
     <distributionManagement>
         <repository>

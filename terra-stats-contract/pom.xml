@@ -6,7 +6,7 @@
     <parent>
         <artifactId>terra-stats-api-parent</artifactId>
         <groupId>kerner1000.terra</groupId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.1</version>
     </parent>
 
     <artifactId>terra-stats-contract</artifactId>

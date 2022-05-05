@@ -1,7 +1,7 @@
 package com.github.kerner1000.terra.transactions;
 
-import com.github.kerner1000.terra.ExtractedSwap;
-import com.github.kerner1000.terra.SwapPairs;
+import com.github.kerner1000.terra.commons.ExtractedSwap;
+import com.github.kerner1000.terra.commons.SwapPairs;
 import com.github.kerner1000.terra.json.data.MsgValue;
 import com.github.kerner1000.terra.transactions.swap.MarketSwapExtractor;
 import com.github.kerner1000.terra.transactions.swap.SwapTransactionVisitor;

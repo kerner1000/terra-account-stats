@@ -14,18 +14,11 @@ import java.util.List;
 @Service
 public class WeightedMeanCalculatorService {
 
-    private final BuySellMaps result = new BuySellMaps();
-
-    public void visit(List<Transaction> transactions) throws InterruptedException {
+    public BuySellMaps visit(List<Transaction> transactions) throws InterruptedException {
         BuySellMaps wm = new Transactions().getWeightedMeanSwapMaps(transactions);
-        result.add(wm);
 //        if(log.isDebugEnabled() && wm.getBuyMap().getMap().size() > 1 || wm.getSellMap().getMap().size() > 1) {
 //            log.debug("swap map:\n{}\n======\nweighted mean: {}", result, new Transactions().getWeightedMean(result));
 //        }
-        return;
-    }
-
-    public BuySellMaps getMeanMap() {
-        return result;
+        return wm;
     }
 }

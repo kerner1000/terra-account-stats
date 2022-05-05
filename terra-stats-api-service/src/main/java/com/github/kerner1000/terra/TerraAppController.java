@@ -2,11 +2,10 @@ package com.github.kerner1000.terra;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.kerner1000.terra.commons.BinnedBuySellMaps;
+import com.github.kerner1000.terra.commons.BuySellMaps;
 import com.github.kerner1000.terra.commons.SwapPrices;
-import com.github.kerner1000.terra.feign.DataHubClient;
 import com.github.kerner1000.terra.feign.LcdClient;
 import com.github.kerner1000.terra.feign.LcdTransactionsPagination;
-import com.github.kerner1000.terra.feign.TerraConfig;
 import com.github.kerner1000.terra.json.data.Transaction;
 import com.github.kerner1000.terra.transactions.Transactions;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +23,6 @@ import java.util.List;
 @RestController
 public class TerraAppController implements SwapsApi {
 
-    private final DataHubClient dataHubClient;
-
     private final LcdClient lcdClient;
 
     private final WeightedMeanCalculatorService callbackService;
@@ -34,32 +31,32 @@ public class TerraAppController implements SwapsApi {
 
     private final TerraConfig terraConfig;
 
-    public TerraAppController(DataHubClient dataHubClient, LcdClient lcdClient, WeightedMeanCalculatorService callbackService, ObjectMapper objectMapper, TerraConfig terraConfig) {
-        this.dataHubClient = dataHubClient;
+    public TerraAppController(LcdClient lcdClient, WeightedMeanCalculatorService callbackService, ObjectMapper objectMapper, TerraConfig terraConfig) {
         this.lcdClient = lcdClient;
         this.callbackService = callbackService;
         this.objectMapper = objectMapper;
         this.terraConfig = terraConfig;
-
-
     }
 
     @Override
     public ResponseEntity<BuySellSwaps> getSwaps(String token, String terraAddress) {
         log.info("Calculating average buy/sell for {} and address {}", token, terraAddress);
-        List<Transaction> allTransactions = new ArrayList<>();
+        long transactionsCount = 0;
         long offset = 0;
+        BuySellMaps collectedSwaps = new BuySellMaps();
         do {
             try {
                 LcdTransactionsPagination lcdTransactionsPagination = lcdClient.searchTransactions(terraAddress, 100, offset);
                 List<Transaction> transactions = new ArrayList<>(lcdTransactionsPagination.getTxs());
-                callbackService.visit(lcdTransactionsPagination.getTxs());
-                allTransactions.addAll(transactions);
-                log.info("Collected {} transactions, current offset: {}", allTransactions.size(), String.format("%,d", offset));
-                try {
-                    objectMapper.writeValue(new File("transaction-"+offset+".json"), allTransactions);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                collectedSwaps.add(callbackService.visit(lcdTransactionsPagination.getTxs()));
+                transactionsCount += transactions.size();
+                log.info("Collected {} transactions, current offset: {}", transactionsCount, offset);
+                if(terraConfig.isWriteTransactions()) {
+                    try {
+                        objectMapper.writeValue(new File("transactions/transaction-" + offset + ".json"), transactions);
+                    } catch (IOException e) {
+                        log.error("Failed to write transactions {}", e.getLocalizedMessage(), e);
+                    }
                 }
                 offset = lcdTransactionsPagination.getNext();
                 Thread.sleep(terraConfig.getSleepBetweenCalls());
@@ -68,16 +65,11 @@ public class TerraAppController implements SwapsApi {
             }
         } while (offset != 0);
 
-        SwapPrices result2 = new Transactions().getWeightedMean(callbackService.getMeanMap());
-        log.info("Collected {} transactions, average swap price is {}", allTransactions.size(), result2);
-        double max = callbackService.getMeanMap().getBuyMap().getMap().keySet().stream().mapToDouble(k -> k.price().doubleValue()).max().orElse(0);
-        double min = 0;
-        var bins = BinnedBuySellMaps.BinFactory.buildFixedBinSize(min, max, 5);
-        BinnedBuySellMaps binnedBuySellMaps = new BinnedBuySellMaps<>(bins);
-        binnedBuySellMaps.add(callbackService.getMeanMap().getBuyMap());
+        SwapPrices result2 = new Transactions().getWeightedMean(collectedSwaps);
+        log.info("Collected {} transactions, average swap price is {}", transactionsCount, result2);
+        BinnedBuySellMaps<Double> binnedBuySellMaps = BinnedBuySellMaps.buildWithFixBinSize(collectedSwaps.getBuyMap(), 5);
         log.debug("Buy price distribution:\n{}", binnedBuySellMaps.toAsciiHistogram(false));
-        org.openapitools.model.BuySellSwaps result = Transformer.transform(callbackService.getMeanMap());
-
+        org.openapitools.model.BuySellSwaps result = Transformer.transform(collectedSwaps);
         return ResponseEntity.ok(result);
     }
 }

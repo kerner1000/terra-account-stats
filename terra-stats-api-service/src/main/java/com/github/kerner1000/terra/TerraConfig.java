@@ -1,4 +1,4 @@
-package com.github.kerner1000.terra.feign;
+package com.github.kerner1000.terra;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,4 +10,6 @@ import org.springframework.context.annotation.Configuration;
 public class TerraConfig {
 
     private long sleepBetweenCalls;
+
+    private boolean writeTransactions;
 }

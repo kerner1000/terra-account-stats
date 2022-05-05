@@ -12,21 +12,9 @@ feign:
         loggerLevel: NONE
 
 app.terra.sleep-between-calls: 800
+app.terra.write-transactions: true
 
 spring:
   main:
     banner-mode: off
-
----
-spring:
-  config:
-    activate:
-      on-profile: docker
-
-server.port: 8080
-
-logging:
-  level:
-    root: INFO
-    com.github.kerner1000: INFO
 

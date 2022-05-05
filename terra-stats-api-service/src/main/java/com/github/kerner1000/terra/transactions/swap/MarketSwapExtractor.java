@@ -1,12 +1,15 @@
 package com.github.kerner1000.terra.transactions.swap;
 
-import com.github.kerner1000.terra.*;
 import com.github.kerner1000.terra.commons.BuySellMaps;
+import com.github.kerner1000.terra.commons.Constants;
+import com.github.kerner1000.terra.commons.ExtractedSwap;
+import com.github.kerner1000.terra.commons.SwapType;
+import com.github.kerner1000.terra.json.SwapExtractor;
 import com.github.kerner1000.terra.json.data.AssertLimitOrder;
 import com.github.kerner1000.terra.json.data.ExecuteMessage;
 
-import static com.github.kerner1000.terra.Coin.LUNA;
-import static com.github.kerner1000.terra.Coin.UST;
+import static com.github.kerner1000.terra.commons.Coin.LUNA;
+import static com.github.kerner1000.terra.commons.Coin.UST;
 
 public class MarketSwapExtractor implements SwapExtractor {
 

@@ -2,7 +2,7 @@ package com.github.kerner1000.terra.transactions;
 
 import com.github.kerner1000.terra.commons.BuySellMap;
 import com.github.kerner1000.terra.commons.BuySellMaps;
-import com.github.kerner1000.terra.SwapPairs;
+import com.github.kerner1000.terra.commons.SwapPairs;
 import com.github.kerner1000.terra.commons.SwapPrices;
 import com.github.kerner1000.terra.json.data.Additional;
 import com.github.kerner1000.terra.json.data.Swap;
@@ -30,7 +30,7 @@ public class Transactions {
 
     private final List<AbstractTransactionVisitor> visitors = Arrays.asList(new TerraswapTransactionVisitor(), new AstroportTransactionVisitor(), new MarketTransactionVisitor(), new LoopSwapTransactionVisitor());
 
-    public BuySellMaps getWeightedMeanSwapMaps(Collection<? extends Transaction> transactionsList) throws InterruptedException {
+    public BuySellMaps getWeightedMeanSwapMaps(Collection<? extends Transaction> transactionsList) {
 
         BuySellMaps result = new BuySellMaps();
 

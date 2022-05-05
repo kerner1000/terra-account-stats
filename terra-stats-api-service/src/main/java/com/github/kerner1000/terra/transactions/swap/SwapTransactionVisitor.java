@@ -1,6 +1,6 @@
 package com.github.kerner1000.terra.transactions.swap;
 
-import com.github.kerner1000.terra.ExtractedSwap;
+import com.github.kerner1000.terra.commons.ExtractedSwap;
 import com.github.kerner1000.terra.commons.BuySellMaps;
 import com.github.kerner1000.terra.json.data.*;
 import com.github.kerner1000.terra.transactions.AbstractTransactionVisitor;
@@ -24,7 +24,6 @@ public abstract class SwapTransactionVisitor extends AbstractTransactionVisitor 
                             ExtractedSwap extractedSwap = getExtractedSwap(transaction.getTxhash(), msgValue);
                             if (extractedSwap != null)
                                 result.add(extractedSwap.swapMaps());
-                            else log.debug("No swap found for Tx {}", transaction.getTxhash());
                         }
                     }
                 }

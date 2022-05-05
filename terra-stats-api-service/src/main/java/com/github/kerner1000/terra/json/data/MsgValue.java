@@ -18,7 +18,6 @@ public class MsgValue {
 
     String contract;
 
-    //    @ToString.Exclude
     JsonNode executeMessageString;
 
     @JsonIgnore
@@ -30,16 +29,15 @@ public class MsgValue {
         List<ExecuteMessage> messages = null;
         try {
             messages = Additional.extract(executeMessageString.toString());
-        } catch (JsonProcessingException e1) {
+        } catch (JsonProcessingException jsonProcessingException) {
             var text = executeMessageString.textValue();
             try {
                 byte[] decodedBytes = Base64.getDecoder().decode(text);
                 String decodedString = new String(decodedBytes);
-                log.debug("Decoded message: {}", decodedString);
-            }catch (Exception e2){
-//                log.debug("Failed to extract execute messages from string {}, ex: {}", executeMessageString, e2);
+//                log.debug("Decoded message from\n{} to\n{}", text, decodedString);
+            }catch (IllegalArgumentException illegalArgumentException){
+                log.error(illegalArgumentException.getLocalizedMessage(), illegalArgumentException);
             }
-//            log.debug("Failed to extract execute messages from string {}", executeMessageString);
         }
         if (messages != null && messages.size() > 0)
             setExecuteMessage(messages.get(0));

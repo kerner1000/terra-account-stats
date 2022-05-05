@@ -1,6 +1,4 @@
-package com.github.kerner1000.terra;
-
-import com.github.kerner1000.terra.commons.BuySellMaps;
+package com.github.kerner1000.terra.commons;
 
 public record ExtractedSwap(SwapType swapType, BuySellMaps swapMaps) {
 

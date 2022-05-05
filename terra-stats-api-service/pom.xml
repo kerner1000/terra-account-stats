@@ -5,7 +5,7 @@
     <parent>
         <groupId>kerner1000.terra</groupId>
         <artifactId>terra-stats-api-parent</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>terra-stats-api-service</artifactId>
@@ -35,13 +35,13 @@
         <dependency>
             <groupId>kerner1000.terra</groupId>
             <artifactId>terra-stats-contract</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>kerner1000.terra</groupId>
             <artifactId>terra-stats-commons</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

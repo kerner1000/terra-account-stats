@@ -15,17 +15,31 @@ public class BinnedBuySellMaps<T extends Comparable<T>> {
             var binSize = (max - min) / binCnt;
             var lower = min;
             double upper = lower + binSize;
+            upper = Util.round(upper, 4);
+            Bin<Double> newBin = null;
             while (upper <= max) {
-                var newBin = new Bin<Double>(lower, upper);
+                newBin = new Bin<Double>(lower, upper);
                 result.add(newBin);
-//                System.out.println("Now: lower: " + lower + ", upper: " + upper + ", rounded: " + Math.round(upper*100)/100d);
+//                System.out.println("Now: lower: " + lower + ", upper: " + upper + ", rounded: " + Math.round(upper*1000)/1000d);
 //                System.out.println(newBin);
                 lower = lower + binSize;
+                lower = Util.round(lower, 4);
                 upper = lower + binSize;
+                upper = Util.round(upper, 4);
             }
-            // one last bin to catch elements equal to max
-            var newBin = new Bin<Double>(max, max + binSize);
-            result.add(newBin);
+            if(result.size() < binCnt){
+                newBin = new Bin<Double>(upper, upper + binSize);
+                result.add(newBin);
+            }
+            if(newBin != null){
+                if(Util.doubleEquals(newBin.upperBound, max, 0.0001)){
+                    if(!result.remove(newBin)){
+                        throw new RuntimeException();
+                    }
+                    newBin = new Bin<Double>(newBin.lowerBound, max);
+                    result.add(newBin);
+                }
+            }
             return result;
         }
 

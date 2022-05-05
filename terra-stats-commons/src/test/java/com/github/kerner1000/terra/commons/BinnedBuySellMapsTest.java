@@ -80,6 +80,8 @@ class BinnedBuySellMapsTest {
         var max = 10;
         var binCnt = 2;
         var result = BinnedBuySellMaps.BinFactory.buildWithFixBinCount(min, max, binCnt);
+        System.out.println(result.stream().map(Objects::toString).collect(Collectors.joining("\n")));
+        // one extra bin because of excluding upper bound
         assertEquals(2, result.size());
 
     }
@@ -104,6 +106,8 @@ class BinnedBuySellMapsTest {
         var max = 12;
         var binCnt = 3;
         var result = BinnedBuySellMaps.BinFactory.buildWithFixBinCount(min, max, binCnt);
+        System.out.println("Min:" + min + ", max:" + max + ", binCnt: "+ binCnt);
+        System.out.println(result.stream().map(Object::toString).collect(Collectors.joining("\n")));
         assertEquals(3, result.size());
 
     }

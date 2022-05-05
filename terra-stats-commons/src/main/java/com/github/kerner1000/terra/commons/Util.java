@@ -30,4 +30,9 @@ public class Util {
         return num / denom;
 
     }
+
+    public static boolean doubleEquals(Number n1, Number n2){
+        double epsilon = 0.000001d;
+        return Math.abs(n1.doubleValue() - n2.doubleValue()) < epsilon;
+    }
 }

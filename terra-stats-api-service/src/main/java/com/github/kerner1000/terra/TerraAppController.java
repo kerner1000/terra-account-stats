@@ -70,7 +70,7 @@ public class TerraAppController implements SwapsApi {
 
         SwapPrices result2 = new Transactions().getWeightedMean(collectedSwaps);
         log.info("Collected {} transactions, average swap price is {}", transactionsCount, result2);
-        BinnedBuySellMaps<Double> binnedBuySellMaps = BinnedBuySellMaps.buildWithFixBinSize(collectedSwaps.getBuyMap(), 5);
+        BinnedBuySellMaps<Double> binnedBuySellMaps = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(collectedSwaps.getBuyMap(), 5);
         log.debug("Buy price distribution:\n{}", binnedBuySellMaps.toAsciiHistogram(false));
         org.openapitools.model.BuySellSwaps result = Transformer.transform(collectedSwaps);
         return ResponseEntity.ok(result);

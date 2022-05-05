@@ -1,13 +1,13 @@
-package com.github.kerner1000.terra;
+package com.github.kerner1000.terra.commons;
 
-import com.github.kerner1000.terra.commons.BinnedBuySellMaps;
-import com.github.kerner1000.terra.commons.BuySellMap;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -51,6 +51,8 @@ class BinnedBuySellMapsTest {
         map.add(3, 300);
         map.add(4, 400);
         binned.add(map);
+        System.out.println(binned);
+        // upper bound excluding
         assertEquals(1, binned.getValuesCount());
         assertEquals(1, binned.getBinCnt());
     }
@@ -66,6 +68,7 @@ class BinnedBuySellMapsTest {
         map.add(3, 300);
         map.add(4, 400);
         binned.add(map);
+        System.out.println(binned);
         assertEquals(3, binned.getValuesCount());
         assertEquals(2, binned.getBinCnt());
     }
@@ -76,7 +79,7 @@ class BinnedBuySellMapsTest {
         var min = 0;
         var max = 10;
         var binCnt = 2;
-        var result = BinnedBuySellMaps.BinFactory.buildFixedBinCnt(min, max, binCnt);
+        var result = BinnedBuySellMaps.BinFactory.buildWithFixBinCount(min, max, binCnt);
         assertEquals(2, result.size());
 
     }
@@ -87,8 +90,10 @@ class BinnedBuySellMapsTest {
         var min = 0;
         var max = 10;
         var binSize = 2;
-        var result = BinnedBuySellMaps.BinFactory.buildFixedBinSize(min, max, binSize);
-        assertEquals(5, result.size());
+        var result = BinnedBuySellMaps.BinFactory.buildWithFixBinSize(min, max, binSize);
+//        System.out.println(result.stream().map(Objects::toString).collect(Collectors.joining("\n")));
+        // one extra bin because of excluding upper bound
+        assertEquals(6, result.size());
 
     }
 
@@ -98,7 +103,7 @@ class BinnedBuySellMapsTest {
         var min = 2;
         var max = 12;
         var binCnt = 3;
-        var result = BinnedBuySellMaps.BinFactory.buildFixedBinCnt(min, max, binCnt);
+        var result = BinnedBuySellMaps.BinFactory.buildWithFixBinCount(min, max, binCnt);
         assertEquals(3, result.size());
 
     }
@@ -109,7 +114,7 @@ class BinnedBuySellMapsTest {
         var min = 2;
         var max = 12;
         var binCnt = 3;
-        var result = BinnedBuySellMaps.BinFactory.buildFixedBinSize(min, max, binCnt);
+        var result = BinnedBuySellMaps.BinFactory.buildWithFixBinSize(min, max, binCnt);
         assertEquals(4, result.size());
 
     }
@@ -126,5 +131,44 @@ class BinnedBuySellMapsTest {
         map.add(3, 300);
         map.add(4, 400);
         binned.add(map);
+    }
+
+    @Test
+    public void testSingleBin(){
+        var buySellMap = new BuySellMap();
+        buySellMap.add(1, 100000);
+        var maps = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(buySellMap, 1);
+        // two bins, one extra bin because of excluding upper bound
+        assertEquals(2, maps.getBinCnt());
+        assertEquals(1, maps.getValuesCount());
+    }
+
+    @Test
+    public void testBinnedBuySellMapsFactoryFixedBinSizeSingleBin01(){
+        var buySellMap = new BuySellMap();
+        buySellMap.add(1, 100000);
+        var maps = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(buySellMap, 1);
+        // two bins, one extra bin because of excluding upper bound
+       assertEquals(2, maps.getBinCnt());
+    }
+
+    @Test
+    public void testBinnedBuySellMapsFactoryFixedBinSizeSingleBin02(){
+        var buySellMap = new BuySellMap();
+        buySellMap.add(1, 100000);
+        buySellMap.add(2, 100000);
+        var maps = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(buySellMap, 3);
+        System.out.println(maps);
+        assertEquals(1, maps.getBinCnt());
+    }
+
+    @Test
+    public void testBinnedBuySellMapsFactoryFixedBinSizeTwoBin(){
+        var buySellMap = new BuySellMap();
+        buySellMap.add(1, 100000);
+        buySellMap.add(3, 100000);
+        var maps = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(buySellMap, 2);
+//        System.out.println(maps);
+        assertEquals(2, maps.getBinCnt());
     }
 }

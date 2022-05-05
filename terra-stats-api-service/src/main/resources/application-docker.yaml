@@ -9,3 +9,5 @@ logging:
   level:
     root: INFO
     com.github.kerner1000: INFO
+
+app.terra.write-transactions: false

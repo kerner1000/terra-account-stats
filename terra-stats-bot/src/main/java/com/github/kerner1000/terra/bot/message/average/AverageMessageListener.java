@@ -82,7 +82,16 @@ public abstract class AverageMessageListener {
                 BinnedBuySellMaps binnedSellMap = BinnedBuySellMaps.buildWithFixBinSize(sellMap, 5);
                 SwapPrices swapPrices = new SwapPrices(Util.weightedMean(buySellSwaps.getBuy().getSwaps()),Util.weightedMean(buySellSwaps.getSell().getSwaps()));
 
-                return "```Average swap prices: "+ swapPrices + "\n" + "Buy price distribution:\n"+binnedBuyMap.toAsciiHistogram(false) + "Sell price distribution:\n" + binnedSellMap.toAsciiHistogram(false) + "```";
+                StringBuilder sb = new StringBuilder();
+                sb.append("Average swap prices are: ");
+                sb.append(swapPrices);
+                sb.append("\n");
+                sb.append("Your buy price distribution:");
+                sb.append("\n");
+                sb.append("```" + binnedBuyMap.toAsciiHistogram(false) + "```");
+                sb.append("Your sell price distribution:");
+                sb.append("```" + binnedSellMap.toAsciiHistogram(false) + "```");
+                return sb.toString();
             }
         } catch(Exception e){
             log.error(e.getLocalizedMessage(), e);

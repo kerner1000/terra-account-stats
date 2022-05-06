@@ -53,8 +53,9 @@ public class TerraAppController implements SwapsApi {
                 log.info("Collected {} transactions, current offset: {}", transactionsCount, offset);
                 if(terraConfig.isWriteTransactions()) {
                     try {
-                        File file = new File("transactions/" + terraAddress + "transaction-" + offset + ".json");
-                        if(file.mkdirs()){
+                        File directory = new File("transactions/"+terraAddress);
+                        File file = new File(directory,"transaction-" + offset + ".json");
+                        if(directory.exists() || directory.mkdirs()){
                             objectMapper.writeValue(file, transactions);
                         }
                     } catch (IOException e) {

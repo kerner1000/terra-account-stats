@@ -1,6 +1,5 @@
 package com.github.kerner1000.terra.commons;
 
-import org.openapitools.model.BuySellSwaps;
 import org.openapitools.model.SwapEntry;
 import org.openapitools.model.Swaps;
 

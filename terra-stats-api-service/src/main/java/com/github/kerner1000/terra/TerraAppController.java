@@ -1,10 +1,7 @@
 package com.github.kerner1000.terra;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.kerner1000.terra.commons.BinnedBuySellMaps;
-import com.github.kerner1000.terra.commons.BuySellMaps;
-import com.github.kerner1000.terra.commons.Coin;
-import com.github.kerner1000.terra.commons.SwapPrices;
+import com.github.kerner1000.terra.commons.*;
 import com.github.kerner1000.terra.feign.LcdClient;
 import com.github.kerner1000.terra.feign.LcdTransactionsPagination;
 import com.github.kerner1000.terra.json.data.Transaction;
@@ -44,19 +41,15 @@ public class TerraAppController implements SwapsApi {
         log.info("Calculating average buy/sell for address {}", terraAddress);
         long transactionsCount = 0;
         long offset = 0;
-        Map<Coin,BuySellMaps> coinToCollectedSwaps = new TreeMap<>();
+        BuySellMapsForCoin coinToCollectedSwaps = new BuySellMapsForCoin();
         do {
             try {
                 LcdTransactionsPagination lcdTransactionsPagination = lcdClient.searchTransactions(terraAddress, 100, offset);
                 List<Transaction> transactions = new ArrayList<>(lcdTransactionsPagination.getTxs());
-                var buySellMapsForCoin = new LunaWeightedMeanCalculatorService().visit(lcdTransactionsPagination.getTxs());
-                var buySellMaps = coinToCollectedSwaps.get(buySellMapsForCoin.coin());
-                if(buySellMaps != null){
-                    buySellMaps.add(buySellMapsForCoin.buySellMaps());
-                } else {
-                    buySellMaps = buySellMapsForCoin.buySellMaps();
-                }
-                coinToCollectedSwaps.put(buySellMapsForCoin.coin(), buySellMaps);
+                BuySellMapsForCoin buySellMapsForCoin = new LunaWeightedMeanCalculatorService().visit(lcdTransactionsPagination.getTxs());
+                BuySellMapsForCoin buySellMapsForCoinMars = new MarsWeightedMeanCalculatorService().visit(lcdTransactionsPagination.getTxs());
+                coinToCollectedSwaps.add(buySellMapsForCoin);
+                coinToCollectedSwaps.add(buySellMapsForCoinMars);
                 transactionsCount += transactions.size();
                 log.info("Collected {} transactions, current offset: {}", transactionsCount, offset);
                 if(terraConfig.isWriteTransactions()) {

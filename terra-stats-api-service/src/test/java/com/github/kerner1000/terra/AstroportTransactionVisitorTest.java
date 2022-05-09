@@ -33,8 +33,9 @@ class AstroportTransactionVisitorTest {
         Transaction transaction = objectMapper.readValue(new File("src/test/resources/example-transaction-astroport-UST-to-LUNA.json"), Transaction.class);
         var result = transactionVisitor.visit(transaction);
         assertNotNull(result);
-       assertEquals(1,result.getBuyMap().getMap().size());
-       assertEquals(0,result.getSellMap().getMap().size());
+        assertEquals(1, result.getBuyMap().getMap().size());
+        assertEquals(0, result.getSellMap().getMap().size());
+        assertEquals(10d, result.getBuyMap().getMap().values().iterator().next());
 
     }
 

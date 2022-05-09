@@ -18,6 +18,8 @@ public class SwapPairs {
     public static class Astroport {
 
         public static String LUNA_UST = "terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552";
+
+        public static String MARS_UST = "terra19wauh79y42u5vt62c5adt2g5h4exgh26t3rpds";
     }
 
     public static class Loop {

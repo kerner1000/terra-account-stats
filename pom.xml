@@ -22,6 +22,8 @@
         <github-repo>terra-stats</github-repo>
         <spring.cloud.version>2021.0.0</spring.cloud.version>
         <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <spring.boot.version>2.6.6</spring.boot.version>
     </properties>
 

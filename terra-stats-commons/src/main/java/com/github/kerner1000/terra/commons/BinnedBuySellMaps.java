@@ -74,6 +74,13 @@ public class BinnedBuySellMaps<T extends Comparable<T>> {
             return binnedBuySellMaps;
         }
 
+        public static BinnedBuySellMaps<Double> buildWithFixBinSize(BuySellMap map) {
+            double max = map.getMap().keySet().stream().mapToDouble(k -> k.price().doubleValue()).max().orElse(0);
+            int binSize = (int)Math.round (max / 100d * 5);
+            binSize = Math.max(binSize, 1);
+            return buildWithFixBinSize(map, binSize);
+        }
+
         public static BinnedBuySellMaps<Double> buildWithFixBinCount(BuySellMap map, int binCnt) {
             double max = map.getMap().keySet().stream().mapToDouble(k -> k.price().doubleValue()).max().orElse(0);
             double min = 0;

@@ -6,7 +6,8 @@
     <parent>
         <artifactId>terra-stats-api-parent</artifactId>
         <groupId>kerner1000.terra</groupId>
-        <version>1.0.2-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+        <version>1.0.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>terra-stats-contract</artifactId>
@@ -41,6 +42,10 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>

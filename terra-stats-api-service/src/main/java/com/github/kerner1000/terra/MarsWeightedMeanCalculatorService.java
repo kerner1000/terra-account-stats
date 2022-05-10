@@ -12,6 +12,6 @@ public class MarsWeightedMeanCalculatorService extends WeightedMeanCalculatorSer
     }
 
     protected Iterable<? extends AbstractTransactionVisitor> getVisitors() {
-        return Arrays.asList(new AstroportTransactionVisitorMars());
+        return Arrays.asList(new AstroportTransactionVisitorMars(), new TerraswapTransactionVisitorMars());
     }
 }

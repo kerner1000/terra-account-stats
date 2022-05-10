@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
         <github-user>kerner1000</github-user>
-        <github-repo>drrename</github-repo>
+        <github-repo>terra-stats</github-repo>
         <spring.cloud.version>2021.0.0</spring.cloud.version>
         <java.version>17</java.version>
         <spring.boot.version>2.6.6</spring.boot.version>

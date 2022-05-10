@@ -6,7 +6,7 @@
         <artifactId>terra-stats-api-parent</artifactId>
         <groupId>kerner1000.terra</groupId>
         <relativePath>../pom.xml</relativePath>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
 
     <artifactId>terra-stats-bot</artifactId>
@@ -39,13 +39,13 @@
         <dependency>
             <groupId>kerner1000.terra</groupId>
             <artifactId>terra-stats-contract</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>1.0.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>kerner1000.terra</groupId>
             <artifactId>terra-stats-commons</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
 

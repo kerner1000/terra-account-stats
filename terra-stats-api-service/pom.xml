@@ -6,7 +6,7 @@
         <groupId>kerner1000.terra</groupId>
         <artifactId>terra-stats-api-parent</artifactId>
         <relativePath>../pom.xml</relativePath>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
 
     <artifactId>terra-stats-api-service</artifactId>
@@ -34,7 +34,7 @@
         <dependency>
             <groupId>kerner1000.terra</groupId>
             <artifactId>terra-stats-contract</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>1.0.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -51,13 +51,13 @@
         <dependency>
             <groupId>kerner1000.terra</groupId>
             <artifactId>terra-stats-contract</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>1.0.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>kerner1000.terra</groupId>
             <artifactId>terra-stats-commons</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>1.0.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

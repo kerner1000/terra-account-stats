@@ -1,6 +1,5 @@
 package com.github.kerner1000.terra.commons;
 
-import org.openapitools.model.BuySellSwaps;
 import org.openapitools.model.SwapEntry;
 import org.openapitools.model.Swaps;
 
@@ -31,6 +30,7 @@ public class BuySellMap {
 
     public BuySellMap(Swaps swaps) {
         this.map = new TreeMap<>(Collections.reverseOrder());
+        if(swaps != null && swaps.getSwaps() != null)
         for(SwapEntry s : swaps.getSwaps()){
             add(s.getId(), s.getPrice(), s.getAmount());
         }

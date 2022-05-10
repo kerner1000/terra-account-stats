@@ -1,24 +1,35 @@
 package com.github.kerner1000.terra;
 
 import com.github.kerner1000.terra.commons.BuySellMaps;
+import com.github.kerner1000.terra.commons.BuySellMapsForCoin;
+import com.github.kerner1000.terra.commons.Coin;
 import com.github.kerner1000.terra.json.data.Transaction;
-import com.github.kerner1000.terra.transactions.Transactions;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
+import com.github.kerner1000.terra.transactions.AbstractTransactionVisitor;
 
 import java.util.List;
 
-@Slf4j
-@RequestScope
-@Service
-public class WeightedMeanCalculatorService {
+public abstract class WeightedMeanCalculatorService {
 
-    public BuySellMaps visit(List<Transaction> transactions) throws InterruptedException {
-        BuySellMaps wm = new Transactions().getWeightedMeanSwapMaps(transactions);
-//        if(log.isDebugEnabled() && wm.getBuyMap().getMap().size() > 1 || wm.getSellMap().getMap().size() > 1) {
-//            log.debug("swap map:\n{}\n======\nweighted mean: {}", result, new Transactions().getWeightedMean(result));
-//        }
-        return wm;
+    private final Coin coin;
+
+    protected WeightedMeanCalculatorService(Coin coin) {
+        this.coin = coin;
     }
+
+    public BuySellMapsForCoin visit(List<Transaction> transactions) throws InterruptedException {
+        
+        BuySellMaps result = new BuySellMaps();
+
+        for (Transaction transaction : transactions) {
+            if(Thread.currentThread().isInterrupted()){
+                break;
+            }
+            for (AbstractTransactionVisitor visitor : getVisitors()) {
+                result.add(visitor.visit(transaction));
+            }
+        }
+        return new BuySellMapsForCoin(coin, result);
+    }
+
+    protected abstract Iterable<? extends AbstractTransactionVisitor> getVisitors();
 }

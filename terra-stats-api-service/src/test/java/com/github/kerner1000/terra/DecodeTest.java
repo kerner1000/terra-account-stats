@@ -8,7 +8,7 @@ public class DecodeTest {
 
     @Test
     public void test(){
-        var text = "eyJhc3NlcnRfbGltaXRfb3JkZXIiOnsib2ZmZXJfY29pbiI6eyJkZW5vbSI6InVsdW5hIiwiYW1vdW50IjoiMTAwMDAwMDAifSwiYXNrX2Rlbm9tIjoidXVzZCIsIm1pbmltdW1fcmVjZWl2ZSI6IjE1NDgzNjMxNiJ9fQ==";
+        var text = "eyJzd2FwIjp7Im1heF9zcHJlYWQiOiIwLjAwNSIsImJlbGllZl9wcmljZSI6IjEuMTc3Njg3MzQ3MDkyMDE5MDcxIn19";
         byte[] decodedBytes = Base64.getDecoder().decode(text);
         String decodedString = new String(decodedBytes);
         System.out.println(decodedString);

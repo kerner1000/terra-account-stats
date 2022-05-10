@@ -11,7 +11,7 @@ feign:
       default:
         loggerLevel: NONE
 
-app.terra.sleep-between-calls: 800
+app.terra.sleep-between-calls: 900
 app.terra.write-transactions: true
 
 spring:

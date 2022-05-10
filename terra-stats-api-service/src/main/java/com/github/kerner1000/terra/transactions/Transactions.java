@@ -6,11 +6,9 @@ import com.github.kerner1000.terra.commons.SwapPairs;
 import com.github.kerner1000.terra.commons.SwapPrices;
 import com.github.kerner1000.terra.json.data.Additional;
 import com.github.kerner1000.terra.json.data.Swap;
-import com.github.kerner1000.terra.json.data.Transaction;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -27,27 +25,6 @@ public class Transactions {
     static final Predicate<Additional> MARKET_FILTER = a -> a != null && a.getContract() != null && a.getContract().stream().anyMatch(c -> c.contains(SwapPairs.Market.LUNA_UST));
 
     static final Predicate<Additional> ASTROPORT_FILTER = a -> a != null && a.getContract() != null && a.getContract().stream().anyMatch(c -> c.contains(SwapPairs.Astroport.LUNA_UST));
-
-    private final List<AbstractTransactionVisitor> visitors = Arrays.asList(new TerraswapTransactionVisitor(), new AstroportTransactionVisitor(), new MarketTransactionVisitor(), new LoopSwapTransactionVisitor());
-
-    public BuySellMaps getWeightedMeanSwapMaps(Collection<? extends Transaction> transactionsList) {
-
-        BuySellMaps result = new BuySellMaps();
-
-        for (Transaction transaction : transactionsList) {
-            if(Thread.currentThread().isInterrupted()){
-                break;
-            }
-            for (AbstractTransactionVisitor visitor : visitors) {
-                result.add(visitor.visit(transaction));
-            }
-        }
-        return result;
-    }
-
-    public SwapPrices getWeightedMean(Collection<? extends Transaction> transactionsList) throws InterruptedException {
-        return getWeightedMean(getWeightedMeanSwapMaps(transactionsList));
-    }
 
     public SwapPrices getWeightedMean(BuySellMaps swapResult) {
         return new SwapPrices(weightedMean(swapResult.getBuyMap()), weightedMean(swapResult.getSellMap()));

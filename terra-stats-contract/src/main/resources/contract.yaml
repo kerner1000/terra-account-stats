@@ -4,7 +4,7 @@ info:
   description: Terra Stats OpenAPI contract
   version: 1.0.0
 paths:
-  /swaps/{coin}/{terra-address}:
+  /swaps/{terra-address}:
     get:
       summary: get swaps for given coin
       description: get swaps for given coin
@@ -12,23 +12,26 @@ paths:
       tags:
         - /swaps
       parameters:
-        - name: coin
-          in: path
-          schema:
-            type: string
-          required: true
         - name: terra-address
           in: path
           schema:
             type: string
           required: true
+        - name: hide
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          required: false
+
       responses:
         200:
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BuySellSwaps'
+                $ref: '#/components/schemas/BuySellSwapsPerCoin'
         500:
           description: internal server error
           content:
@@ -56,9 +59,18 @@ components:
     BuySellSwaps:
       type: object
       properties:
+        coin:
+          type: string
         buy:
           $ref: '#/components/schemas/Swaps'
         sell:
           $ref: '#/components/schemas/Swaps'
+    BuySellSwapsPerCoin:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuySellSwaps'
     Error:
       type: object

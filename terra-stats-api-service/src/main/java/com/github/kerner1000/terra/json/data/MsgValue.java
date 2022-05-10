@@ -31,6 +31,10 @@ public class MsgValue {
             messages = Additional.extract(executeMessageString.toString());
         } catch (JsonProcessingException jsonProcessingException) {
             var text = executeMessageString.textValue();
+            // "send" msg
+            if(text == null){
+                return;
+            }
             try {
                 byte[] decodedBytes = Base64.getDecoder().decode(text);
                 String decodedString = new String(decodedBytes);

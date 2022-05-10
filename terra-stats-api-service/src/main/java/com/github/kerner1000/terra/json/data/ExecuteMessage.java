@@ -8,6 +8,8 @@ public class ExecuteMessage {
 
     Swap swap;
 
+    Send send;
+
     @JsonProperty("assert_limit_order")
     AssertLimitOrder assertLimitOrder;
 

@@ -8,6 +8,7 @@ import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.spec.MessageCreateMono;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.model.BuySellSwaps;
+import org.openapitools.model.BuySellSwapsPerCoin;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 
@@ -71,28 +72,30 @@ public abstract class AverageMessageListener {
 
     private String processBuyCommand(String buyCommandString) {
         try {
-            if (buyCommandString.startsWith("LUNA")) {
-                String terraAddress = buyCommandString.substring("LUNA".length()).trim();
-                ResponseEntity<BuySellSwaps> apiResponse = accountStatsApiClient.getSwaps("Luna", terraAddress);
 
-                BuySellSwaps buySellSwaps = apiResponse.getBody();
-                BuySellMap buyMap = new BuySellMap(buySellSwaps.getBuy());
-                BinnedBuySellMaps binnedBuyMap = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(buyMap, 5);
-                BuySellMap sellMap = new BuySellMap(buySellSwaps.getSell());
-                BinnedBuySellMaps binnedSellMap = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(sellMap, 5);
-                SwapPrices swapPrices = new SwapPrices(Util.weightedMean(buySellSwaps.getBuy().getSwaps()),Util.weightedMean(buySellSwaps.getSell().getSwaps()));
-
+                String terraAddress = buyCommandString.trim();
+                ResponseEntity<BuySellSwapsPerCoin> apiResponse = accountStatsApiClient.getSwaps(terraAddress,null);
                 StringBuilder sb = new StringBuilder();
-                sb.append("Average swap prices are:\n");
-                sb.append(swapPrices);
-                sb.append("\n");
-                sb.append("Your buy price distribution:");
-                sb.append("\n");
-                sb.append("```" + binnedBuyMap.toAsciiHistogram(false) + "```");
-                sb.append("Your sell price distribution:");
-                sb.append("```" + binnedSellMap.toAsciiHistogram(false) + "```");
+                for(BuySellSwaps buySellSwaps : apiResponse.getBody().getEntries()){
+                    sb.append(buySellSwaps.getCoin());
+                    sb.append(":\n");
+                    BuySellMap buyMap = new BuySellMap(buySellSwaps.getBuy());
+                    BinnedBuySellMaps binnedBuyMap = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(buyMap);
+                    BuySellMap sellMap = new BuySellMap(buySellSwaps.getSell());
+                    BinnedBuySellMaps binnedSellMap = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(sellMap);
+                    SwapPrices swapPrices = new SwapPrices(Util.weightedMean(buySellSwaps.getBuy().getSwaps()),Util.weightedMean(buySellSwaps.getSell().getSwaps()));
+                    sb.append("Average swap prices are:\n");
+                    sb.append(swapPrices);
+                    sb.append("\n");
+                    sb.append("Your buy price distribution:");
+                    sb.append("\n");
+                    sb.append("```" + binnedBuyMap.toAsciiHistogram(false) + "```");
+                    sb.append("Your sell price distribution:");
+                    sb.append("```" + binnedSellMap.toAsciiHistogram(false) + "```");
+                    sb.append("\n");
+                }
                 return sb.toString();
-            }
+
         } catch(Exception e){
             log.error(e.getLocalizedMessage(), e);
         }

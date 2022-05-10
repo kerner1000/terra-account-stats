@@ -7,7 +7,7 @@
         <artifactId>terra-stats-api-parent</artifactId>
         <groupId>kerner1000.terra</groupId>
         <relativePath>../pom.xml</relativePath>
-        <version>1.0.2</version>
+        <version>1.0.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>terra-stats-contract</artifactId>

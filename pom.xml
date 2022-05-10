@@ -11,7 +11,7 @@
 
     <groupId>kerner1000.terra</groupId>
     <artifactId>terra-stats-api-parent</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 

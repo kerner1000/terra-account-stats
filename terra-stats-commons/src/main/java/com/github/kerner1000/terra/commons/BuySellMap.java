@@ -30,6 +30,7 @@ public class BuySellMap {
 
     public BuySellMap(Swaps swaps) {
         this.map = new TreeMap<>(Collections.reverseOrder());
+        if(swaps != null && swaps.getSwaps() != null)
         for(SwapEntry s : swaps.getSwaps()){
             add(s.getId(), s.getPrice(), s.getAmount());
         }

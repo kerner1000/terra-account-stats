@@ -10,6 +10,9 @@ import java.util.Map;
 public class Util {
 
     public static double weightedMean(Collection<? extends SwapEntry> swapEntries){
+        if(swapEntries == null ||swapEntries.isEmpty()){
+            return 0;
+        }
         double num = 0;
         double denom = 0;
         for (SwapEntry entry : swapEntries) {

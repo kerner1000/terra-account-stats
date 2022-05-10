@@ -80,9 +80,9 @@ public abstract class AverageMessageListener {
                     sb.append(buySellSwaps.getCoin());
                     sb.append(":\n");
                     BuySellMap buyMap = new BuySellMap(buySellSwaps.getBuy());
-                    BinnedBuySellMaps binnedBuyMap = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(buyMap, 5);
+                    BinnedBuySellMaps binnedBuyMap = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(buyMap);
                     BuySellMap sellMap = new BuySellMap(buySellSwaps.getSell());
-                    BinnedBuySellMaps binnedSellMap = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(sellMap, 5);
+                    BinnedBuySellMaps binnedSellMap = BinnedBuySellMaps.BinnedBuySellMapsFactory.buildWithFixBinSize(sellMap);
                     SwapPrices swapPrices = new SwapPrices(Util.weightedMean(buySellSwaps.getBuy().getSwaps()),Util.weightedMean(buySellSwaps.getSell().getSwaps()));
                     sb.append("Average swap prices are:\n");
                     sb.append(swapPrices);
